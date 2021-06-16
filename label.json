@@ -1,0 +1,1610 @@
+{
+    "device_name": "SMA 75",
+    "version": "1.4",
+    "register": {
+        "ID_CommonModel": {
+            "label": "ID_CommonModel",
+            "description": "Common Model's ID",
+            "registerAddr": 40003,
+            "count": 1,
+            "scaleFactor": 0,
+            "datatype": "uint16",
+            "byteOrder": "Big_Endian",
+            "wordOrder": "Big_Endian"
+        },
+        "L_CommonModel": {
+            "label": "L_CommonModel",
+            "description": "Common Model'S ID length",
+            "registerAddr": 40004,
+            "count": 1,
+            "scaleFactor": 0,
+            "datatype": "uint16",
+            "byteOrder": "Big_Endian",
+            "wordOrder": "Big_Endian"
+        },
+        "Mn": {
+            "label": "Mn",
+            "description": "Manufacturer",
+            "registerAddr": 40005,
+            "count": 16,
+            "datatype": "string",
+            "byteOrder": "Big_Endian",
+            "wordOrder": "Big_Endian"
+        },
+        "Md": {
+            "label": "Md",
+            "description": "Model",
+            "registerAddr": 40021,
+            "count": 16,
+            "datatype": "string",
+            "byteOrder": "Big_Endian",
+            "wordOrder": "Big_Endian"
+        },
+        "Opt": {
+            "label": "Opt",
+            "description": "Options",
+            "registerAddr": 40037,
+            "count": 8,
+            "datatype": "string",
+            "byteOrder": "Big_Endian",
+            "wordOrder": "Big_Endian"
+        },
+        "Vr": {
+            "label": "Vr",
+            "description": "Firmware version",
+            "registerAddr": 40045,
+            "count": 8,
+            "datatype": "string",
+            "byteOrder": "Big_Endian",
+            "wordOrder": "Big_Endian"
+        },
+        "SN": {
+            "label": "SN",
+            "description": "Serial Number",
+            "registerAddr": 40053,
+            "count": 16,
+            "datatype": "string",
+            "byteOrder": "Big_Endian",
+            "wordOrder": "Big_Endian"
+        },
+        "DA": {
+            "label": "DA",
+            "description": "Common model's ID Unit",
+            "registerAddr": 40069,
+            "count": 1,
+            "scaleFactor": 0,
+            "datatype": "uint16",
+            "byteOrder": "Big_Endian",
+            "wordOrder": "Big_Endian"
+        },
+        "Pad_Common_Model": {
+            "label": "Pad_Common_Model",
+            "description": "Pad Common Model",
+            "registerAddr": 40070,
+            "count": 1,
+            "datatype": "pad",
+            "byteOrder": "Big_Endian",
+            "wordOrder": "Big_Endian"
+        },
+        "ID_Ethernet_Link_Layer_Model": {
+            "label": "ID_Ethernet_Link_Layer_Model",
+            "description": "Ethernet Link Layer Model's ID",
+            "registerAddr": 40071,
+            "count": 1,
+            "scaleFactor": 0,
+            "datatype": "uint16",
+            "byteOrder": "Big_Endian",
+            "wordOrder": "Big_Endian"
+        },
+        "L_Ethernet_Link_Layer_Model": {
+            "label": "L_Ethernet_Link_Layer_Model",
+            "description": "Ethernet Link Layer Model's ID length",
+            "registerAddr": 40072,
+            "count": 1,
+            "scaleFactor": 0,
+            "datatype": "uint16",
+            "byteOrder": "Big_Endian",
+            "wordOrder": "Big_Endian"
+        },
+
+        "ID_IPv4_Model": {
+            "label": "ID_IPv4_Model",
+            "description": "IPv4 Model's ID",
+            "registerAddr": 40086,
+            "count": 1,
+            "scaleFactor": 0,
+            "datatype": "uint16",
+            "byteOrder": "Big_Endian",
+            "wordOrder": "Big_Endian"
+        },
+
+        "L_IPv4_Model": {
+            "label": "L_IPv4_Model",
+            "description": "IPv4 Model's ID length",
+            "registerAddr": 40087,
+            "count": 1,
+            "scaleFactor": 0,
+            "datatype": "uint16",
+            "byteOrder": "Big_Endian",
+            "wordOrder": "Big_Endian"
+        },
+
+        "Name": {
+            "label": "Name",
+            "description": "Interface Name",
+            "registerAddr": 40088,
+            "count": 4,
+            "datatype": "string",
+            "byteOrder": "Big_Endian",
+            "wordOrder": "Big_Endian"
+        },
+
+        "CfgSt": {
+            "label": "CfgSt",
+            "description": "Config Status",
+            "registerAddr": 40092,
+            "count": 1,
+            "datatype": "enum16",
+            "byteOrder": "Big_Endian",
+            "wordOrder": "Big_Endian"
+        },
+
+        "ChgSt": {
+            "label": "Change_Status",
+            "description": "Change Status",
+            "registerAddr": 40093,
+            "count": 1,
+            "datatype": "bitfield16",
+            "byteOrder": "Big_Endian",
+            "wordOrder": "Big_Endian"
+        },
+
+        "Cap": {
+            "label": "Config_Capability",
+            "description": "Config Capability",
+            "registerAddr": 40094,
+            "count": 1,
+            "datatype": "bitfield16",
+            "byteOrder": "Big_Endian",
+            "wordOrder": "Big_Endian"
+        },
+
+        "IPv4_Config": {
+            "label": "IPv4_Config",
+            "description": "IPv4 Config",
+            "registerAddr": 40095,
+            "count": 1,
+            "datatype": "enum16",
+            "byteOrder": "Big_Endian",
+            "wordOrder": "Big_Endian"
+        },
+
+        "Ctl": {
+            "label": "Control",
+            "description": "Control",
+            "registerAddr": 40095,
+            "count": 1,
+            "datatype": "enum16",
+            "byteOrder": "Big_Endian",
+            "wordOrder": "Big_Endian"
+        },
+
+        "Addr": {
+            "label": "IP_address",
+            "description": "IP address",
+            "registerAddr": 40097,
+            "count": 8,
+            "datatype": "string",
+            "byteOrder": "Big_Endian",
+            "wordOrder": "Big_Endian"
+        },
+
+        "Msk": {
+            "label": "Network_mask",
+            "description": "Network mask",
+            "registerAddr": 40105,
+            "count": 8,
+            "datatype": "string",
+            "byteOrder": "Big_Endian",
+            "wordOrder": "Big_Endian"
+        },
+
+        "Gw": {
+            "label": "Gateway_address",
+            "description": "Gateway address",
+            "registerAddr": 40113,
+            "count": 8,
+            "datatype": "string",
+            "byteOrder": "Big_Endian",
+            "wordOrder": "Big_Endian"
+        },
+
+        "DNS1": {
+            "label": "DNS1",
+            "description": "DNS1",
+            "registerAddr": 40121,
+            "count": 8,
+            "datatype": "string",
+            "byteOrder": "Big_Endian",
+            "wordOrder": "Big_Endian"
+        },
+
+        "DNS2": {
+            "label": "DNS2",
+            "description": "DNS2",
+            "registerAddr": 40129,
+            "count": 8,
+            "datatype": "string",
+            "byteOrder": "Big_Endian",
+            "wordOrder": "Big_Endian"
+        },
+
+        "NTP1": {
+            "label": "NTP1",
+            "description": "NTP1",
+            "registerAddr": 40137,
+            "count": 12,
+            "datatype": "string",
+            "byteOrder": "Big_Endian",
+            "wordOrder": "Big_Endian"
+        },
+
+        "NTP2": {
+            "label": "NTP2",
+            "description": "NTP2",
+            "registerAddr": 40149,
+            "count": 12,
+            "datatype": "string",
+            "byteOrder": "Big_Endian",
+            "wordOrder": "Big_Endian"
+        },
+        
+        "DomNam": {
+            "label": "Domain",
+            "description": "Domain",
+            "registerAddr": 40161,
+            "count": 12,
+            "datatype": "string",
+            "byteOrder": "Big_Endian",
+            "wordOrder": "Big_Endian"
+        },
+
+        "HostNam": {
+            "label": "Host_Name",
+            "description": "Host Name",
+            "registerAddr": 40173,
+            "count": 12,
+            "scaleFactor": 0,
+            "datatype": "string",
+            "byteOrder": "Big_Endian",
+            "wordOrder": "Big_Endian"
+        },
+
+        "Pad_IPv4": {
+            "label": "Pad",
+            "description": "Pad",
+            "registerAddr": 40185,
+            "count": 1,
+            "datatype": "pad",
+            "byteOrder": "Big_Endian",
+            "wordOrder": "Big_Endian"
+        },
+
+        "ID_Inverter_Integer_Map": {
+            "label": "phsABC",
+            "description": "Inverter Integer Map's ID",
+            "registerAddr": 40186,
+            "count": 1,
+            "scaleFactor": 0,
+            "datatype": "uint16",
+            "byteOrder": "Big_Endian",
+            "wordOrder": "Big_Endian"
+        },
+        
+        "L_Inverter_Integer_Map": {
+            "label": "L_Inverter_Integer_Map",
+            "description": "Inverter Integer Map's ID length",
+            "registerAddr": 40187,
+            "count": 1,
+            "scaleFactor": 0,
+            "datatype": "uint16",
+            "byteOrder": "Big_Endian",
+            "wordOrder": "Big_Endian"
+        },
+
+        "A_InverterIntegerMap": {
+            "label": "A_InverterIntegerMap",
+            "description": "AC current",
+            "registerAddr": 40188,
+            "count": 1,
+            "scaleFactor": -2,
+            "datatype": "uint16",
+            "byteOrder": "Big_Endian",
+            "wordOrder": "Big_Endian",
+            "uint": "A"
+        },
+
+        "AphA": {
+            "label": "AphA",
+            "description": "Current, line conductor L1",
+            "registerAddr": 40189,
+            "count": 1,
+            "scaleFactor": -2,
+            "datatype": "uint16",
+            "byteOrder": "Big_Endian",
+            "wordOrder": "Big_Endian",
+            "uint": "A"
+        },
+
+        "AphB": {
+            "label": "AphB",
+            "description": "Current, line conductor L2",
+            "registerAddr": 40190,
+            "count": 1,
+            "scaleFactor": -2,
+            "datatype": "uint16",
+            "byteOrder": "Big_Endian",
+            "wordOrder": "Big_Endian",
+            "uint": "A"
+        },
+
+        "AphC": {
+            "label": "AphC",
+            "description": "Current, line conductor L3",
+            "registerAddr": 40191,
+            "count": 1,
+            "scaleFactor": -2,
+            "datatype": "uint16",
+            "byteOrder": "Big_Endian",
+            "wordOrder": "Big_Endian",
+            "uint": "A"
+        },
+
+        "A_SF": {
+            "label": "A_SF",
+            "description": "Scale factor current",
+            "registerAddr": 40192,
+            "count": 1,
+            "datatype": "sunssf",
+            "byteOrder": "Big_Endian",
+            "wordOrder": "Big_Endian"
+        },
+
+        "PPVphAB": {
+            "label": "PPVphAB",
+            "description": "Voltage, line conductor L1 to L2",
+            "registerAddr": 40193,
+            "count": 1,
+            "scaleFactor": -1,
+            "datatype": "uint16",
+            "byteOrder": "Big_Endian",
+            "wordOrder": "Big_Endian",
+            "uint": "V"
+        },
+
+        "PPVphBC": {
+            "label": "PPVphBC",
+            "description": "Voltage, line conductor L2 to L3",
+            "registerAddr": 40194,
+            "count": 1,
+            "scaleFactor": -1,
+            "datatype": "uint16",
+            "byteOrder": "Big_Endian",
+            "wordOrder": "Big_Endian",
+            "uint": "V"
+        },
+
+        "PPVphCA": {
+            "label": "PPVphCA",
+            "description": "Voltage, line conductor L3 to L1",
+            "registerAddr": 40195,
+            "count": 1,
+            "scaleFactor": -1,
+            "datatype": "uint16",
+            "byteOrder": "Big_Endian",
+            "wordOrder": "Big_Endian",
+            "uint": "V"
+        },
+
+        "PPVphA": {
+            "label": "PPVphA",
+            "description": "Voltage, line conductor L1 to N",
+            "registerAddr": 40196,
+            "count": 1,
+            "scaleFactor": -1,
+            "datatype": "uint16",
+            "byteOrder": "Big_Endian",
+            "wordOrder": "Big_Endian",
+            "uint": "V"
+        },
+
+        "PPVphB": {
+            "label": "PPVphB",
+            "description": "Voltage, line conductor L2 to N",
+            "registerAddr": 40197,
+            "count": 1,
+            "scaleFactor": -1,
+            "datatype": "uint16",
+            "byteOrder": "Big_Endian",
+            "wordOrder": "Big_Endian",
+            "uint": "V"
+        },
+
+        "PPVphC": {
+            "label": "PPVphC",
+            "description": "Voltage, line conductor L3 to N",
+            "registerAddr": 40195,
+            "count": 1,
+            "scaleFactor": -1,
+            "datatype": "uint16",
+            "byteOrder": "Big_Endian",
+            "wordOrder": "Big_Endian",
+            "uint": "V"
+        },
+
+        "V_SF": {
+            "label": "V_SF",
+            "description": "Scale factor voltage",
+            "registerAddr": 40195,
+            "count": 1,
+            "datatype": "sunssf",
+            "byteOrder": "Big_Endian",
+            "wordOrder": "Big_Endian"
+        },
+
+        "W_Inverter_Integer_Map": {
+            "label": "W_Inverter_Integer_Map",
+            "description": "Active power",
+            "registerAddr": 40200,
+            "count": 1,
+            "scaleFactor": 2,
+            "datatype": "uint16",
+            "byteOrder": "Big_Endian",
+            "wordOrder": "Big_Endian",
+            "uint": "W"
+        },
+
+        "W_SF": {
+            "label": "W_SF",
+            "description": "Scale factor active power",
+            "registerAddr": 40201,
+            "count": 1,
+            "datatype": "sunssf",
+            "byteOrder": "Big_Endian",
+            "wordOrder": "Big_Endian"
+        },
+
+        "Hz": {
+            "label": "Hz",
+            "description": "Power frequency",
+            "registerAddr": 40202,
+            "count": 1,
+            "scaleFactor": -3,
+            "datatype": "uint16",
+            "byteOrder": "Big_Endian",
+            "wordOrder": "Big_Endian",
+            "uint": "Hz"
+        },
+
+        "Hz_SF": {
+            "label": "Hz_SF",
+            "description": "Scale factor power frequency",
+            "registerAddr": 40203,
+            "count": 1,
+            "datatype": "sunssf",
+            "byteOrder": "Big_Endian",
+            "wordOrder": "Big_Endian"
+        },
+
+        "VA": {
+            "label": "VA",
+            "description": "Apparent power",
+            "registerAddr": 40204,
+            "count": 1,
+            "scaleFactor": 3,
+            "datatype": "uint16",
+            "byteOrder": "Big_Endian",
+            "wordOrder": "Big_Endian",
+            "uint": "VA"
+        },
+
+        "VA_SF": {
+            "label": "VA_SF",
+            "description": "Scale factor apparent power",
+            "registerAddr": 40205,
+            "count": 1,
+            "datatype": "sunssf",
+            "byteOrder": "Big_Endian",
+            "wordOrder": "Big_Endian"
+        },
+
+        "VAr": {
+            "label": "VAr",
+            "description": "Reactive power",
+            "registerAddr": 40206,
+            "count": 1,
+            "scaleFactor": 3,
+            "datatype": "uint16",
+            "byteOrder": "Big_Endian",
+            "wordOrder": "Big_Endian",
+            "uint": "VAr"
+        },
+
+        "VAr_SF": {
+            "label": "VAr_SF",
+            "description": "Scale factor reactive power",
+            "registerAddr": 40207,
+            "count": 1,
+            "datatype": "sunssf",
+            "byteOrder": "Big_Endian",
+            "wordOrder": "Big_Endian"
+        },
+
+        "PF": {
+            "label": "PF",
+            "description": "Displacement power factor cos φ",
+            "registerAddr": 40208,
+            "count": 1,
+            "scaleFactor": -2,
+            "datatype": "uint16",
+            "byteOrder": "Big_Endian",
+            "wordOrder": "Big_Endian",
+            "uint": "None"
+        },
+
+        "PF_SF": {
+            "label": "PF_SF",
+            "description": "Scale factor displacement power factor",
+            "registerAddr": 40209,
+            "count": 1,
+            "datatype": "sunssf",
+            "byteOrder": "Big_Endian",
+            "wordOrder": "Big_Endian"
+        },
+
+        "WH": {
+            "label": "WH",
+            "description": "Displacement power factor cos φ",
+            "registerAddr": 40210,
+            "count": 2,
+            "scaleFactor": 3,
+            "datatype": "acc32",
+            "byteOrder": "Big_Endian",
+            "wordOrder": "Big_Endian",
+            "uint": "WH"
+        },
+
+        "WH_SF": {
+            "label": "WH_SF",
+            "description": "Scale factor total yield",
+            "registerAddr": 402012,
+            "count": 1,
+            "datatype": "sunssf",
+            "byteOrder": "Big_Endian",
+            "wordOrder": "Big_Endian"
+        },
+
+        "DCA": {
+            "label": "DCA",
+            "description": "DC current",
+            "registerAddr": 40213,
+            "count": 1,
+            "scaleFactor": -1,
+            "datatype": "uint16",
+            "byteOrder": "Big_Endian",
+            "wordOrder": "Big_Endian",
+            "uint": "DCA"
+        },
+
+        "DCA_SF": {
+            "label": "DCA_SF",
+            "description": "Scale factor DC current",
+            "registerAddr": 40214,
+            "count": 1,
+            "datatype": "sunssf",
+            "byteOrder": "Big_Endian",
+            "wordOrder": "Big_Endian"
+        },
+
+        "DCV": {
+            "label": "DCV",
+            "description": "DC voltage",
+            "registerAddr": 40215,
+            "count": 1,
+            "scaleFactor": -1,
+            "datatype": "uint16",
+            "byteOrder": "Big_Endian",
+            "wordOrder": "Big_Endian",
+            "uint": "DCV"
+        },
+
+        "DCV_SF": {
+            "label": "DCV_SF",
+            "description": "Scale factor DC voltage",
+            "registerAddr": 40216,
+            "count": 1,
+            "datatype": "sunssf",
+            "byteOrder": "Big_Endian",
+            "wordOrder": "Big_Endian"
+        },
+
+        "DCW": {
+            "label": "DCW",
+            "description": "DC power",
+            "registerAddr": 40217,
+            "count": 1,
+            "scaleFactor": 2,
+            "datatype": "uint16",
+            "byteOrder": "Big_Endian",
+            "wordOrder": "Big_Endian",
+            "uint": "DCW"
+        },
+
+        "DCW_SF": {
+            "label": "DCW_SF",
+            "description": "Scale factor DC power",
+            "registerAddr": 40216,
+            "count": 1,
+            "datatype": "sunssf",
+            "byteOrder": "Big_Endian",
+            "wordOrder": "Big_Endian"
+        },
+
+        "TmpCab": {
+            "label": "TmpCab",
+            "description": "Internal temperature",
+            "registerAddr": 40219,
+            "count": 1,
+            "scaleFactor": -1,
+            "datatype": "uint16",
+            "byteOrder": "Big_Endian",
+            "wordOrder": "Big_Endian",
+            "uint": "Degree Celsius"
+        },
+
+        "TmpSnk": {
+            "label": "TmpSnk",
+            "description": "Heat sink temperature",
+            "registerAddr": 40220,
+            "count": 1,
+            "scaleFactor": -1,
+            "datatype": "uint16",
+            "byteOrder": "Big_Endian",
+            "wordOrder": "Big_Endian",
+            "uint": "Degree Celsius"
+        },
+
+        "TmpTrns": {
+            "label": "TmpTrns",
+            "description": "Transformer temperature",
+            "registerAddr": 40221,
+            "count": 1,
+            "scaleFactor": -1,
+            "datatype": "uint16",
+            "byteOrder": "Big_Endian",
+            "wordOrder": "Big_Endian",
+            "uint": "Degree Celsius"
+        },
+
+        "TmpOt": {
+            "label": "TmpOt",
+            "description": "Other temperature",
+            "registerAddr": 40222,
+            "count": 1,
+            "scaleFactor": -1,
+            "datatype": "uint16",
+            "byteOrder": "Big_Endian",
+            "wordOrder": "Big_Endian",
+            "uint": "Degree Celsius"
+        },
+
+        "Tmp_SF": {
+            "label": "Tmp_SF",
+            "description": "Scale factor temperature",
+            "registerAddr": 40223,
+            "count": 1,
+            "datatype": "sunssf",
+            "byteOrder": "Big_Endian",
+            "wordOrder": "Big_Endian"
+        },
+
+        "Tms": {
+            "label": "Tms",
+            "description": "Tms",
+            "registerAddr": 40224,
+            "count": 2,
+            "scaleFactor": 0,
+            "datatype": "uint32",
+            "byteOrder": "Big_Endian",
+            "wordOrder": "Big_Endian"
+        },
+        "Ris": {
+            "label": "Isolation resistance",
+            "description": "Isolation resistance",
+            "registerAddr": 40227,
+            "count": 1,
+            "scaleFactor": 3,
+            "datatype": "uint16",
+            "byteOrder": "Big_Endian",
+            "wordOrder": "Big_Endian"
+            "uint": "Ohm"
+        },
+        "Ris_SF": {
+            "label": "Scale factor for isolation resistance",
+            "description": "Scale factor for isolation resistance",
+            "registerAddr": 40228,
+            "count": 1,
+            "scaleFactor": 0,
+            "datatype": "uint16",
+            "byteOrder": "Big_Endian",
+            "wordOrder": "Big_Endian"
+        },
+        "ID_tab_6": {
+            "label": "ID",
+            "description": "ID",
+            "registerAddr": 40229,
+            "count": 1,
+            "scaleFactor": 0,
+            "datatype": "uint16",
+            "byteOrder": "Big_Endian",
+            "wordOrder": "Big_Endian"
+        },
+        "Length_tab_6": {
+            "label": "Length",
+            "description": "Length",
+            "registerAddr": 40230,
+            "count": 1,
+            "scaleFactor": 0,
+            "datatype": "uint16",
+            "byteOrder": "Big_Endian",
+            "wordOrder": "Big_Endian"
+        },
+        "Conn": {
+            "label": "Connection control",
+            "description": "Connection control.",
+            "registerAddr": 40233,
+            "count": 1,
+            "scaleFactor": 0,
+            "datatype": "enum16",
+            "byteOrder": "Big_Endian",
+            "wordOrder": "Big_Endian"
+        },
+        "WMaxLimPct": {
+            "label": "Normalized active power limitation",
+            "description": "Set power output to specified level",
+            "registerAddr": 40234,
+            "count": 1,
+            "scaleFactor": -1,
+            "datatype": "uint16",
+            "byteOrder": "Big_Endian",
+            "wordOrder": "Big_Endian"
+        },
+        "WMaxLimPct_RvrtTms": {
+            "label": "WMaxLimPct_RvrtTms",
+            "description": "WMaxLimPct_RvrtTms",
+            "registerAddr": 40236,
+            "count": 1,
+            "scaleFactor": 0,
+            "datatype": "uint16",
+            "byteOrder": "Big_Endian",
+            "wordOrder": "Big_Endian"
+        },
+        "WMaxLim_Ena": {
+            "label": "Activate normalized active power limitation",
+            "description": "Throttle enable/disable control:",
+            "registerAddr": 40238,
+            "count": 1,
+            "scaleFactor": 0,
+            "datatype": "enum16",
+            "byteOrder": "Big_Endian",
+            "wordOrder": "Big_Endian"
+        },
+        "OutPFSet": {
+            "label": "Setpoint cos(phi) as per EEI convention",
+            "description": "Set power factor to specific value - cosine of angle",
+            "registerAddr": 40239,
+            "count": 1,
+            "scaleFactor": -3,
+            "datatype": "int16",
+            "byteOrder": "Big_Endian",
+            "wordOrder": "Big_Endian"
+        },
+        "OutPFSet_RvrtTms": {
+            "label": "OutPFSet_RvrtTms",
+            "description": "OutPFSet_RvrtTms",
+            "registerAddr": 40241,
+            "count": 1,
+            "scaleFactor": 0,
+            "datatype": "uint16",
+            "byteOrder": "Big_Endian",
+            "wordOrder": "Big_Endian"
+        },
+        "OutPFSet_Ena": {
+            "label": "Activate fixed power factor control",
+            "description": "Fixed power factor enable/disable control:",
+            "registerAddr": 40243,
+            "count": 1,
+            "scaleFactor": 0,
+            "datatype": "enum16",
+            "byteOrder": "Big_Endian",
+            "wordOrder": "Big_Endian"
+        },
+        "VArWMaxPct": {
+            "label": "Normalized reactive power limitation",
+            "description": "Reactive power in percent of WMax",
+            "registerAddr": 40244,
+            "count": 1,
+            "scaleFactor": 0,
+            "datatype": "int16",
+            "byteOrder": "Big_Endian",
+            "wordOrder": "Big_Endian"
+            "uint": "var"
+        },
+        "VArPct_RvrtTms": {
+            "label": "VArPct_RvrtTms",
+            "description": "VArPct_RvrtTms",
+            "registerAddr": 40248,
+            "count": 1,
+            "scaleFactor": 0,
+            "datatype": "uint16",
+            "byteOrder": "Big_Endian",
+            "wordOrder": "Big_Endian"
+        },
+        "VArPct_Ena": {
+            "label": "Activation of normalized reactive power limitation",
+            "description": "Percent limit VAr enable/disable control",
+            "registerAddr": 40251,
+            "count": 1,
+            "scaleFactor": 0,
+            "datatype": "enum16",
+            "byteOrder": "Big_Endian",
+            "wordOrder": "Big_Endian"
+        },
+        "ID_tab_7": {
+            "label": "ID",
+            "description": "ID",
+            "registerAddr": 41305,
+            "count": 1,
+            "scaleFactor": 0,
+            "datatype": "uint16",
+            "byteOrder": "Big_Endian",
+            "wordOrder": "Big_Endian"
+        },
+        "Length_tab_7": {
+            "label": "Length",
+            "description": "Length",
+            "registerAddr": 41306,
+            "count": 1,
+            "scaleFactor": 0,
+            "datatype": "uint16",
+            "byteOrder": "Big_Endian",
+            "wordOrder": "Big_Endian"
+        },
+        "Evt_Glo": {
+            "label": "Global Events",
+            "description": "Global Events",
+            "registerAddr": 41311,
+            "count": 2,
+            "scaleFactor": 0,
+            "datatype": "bitfield32",
+            "byteOrder": "Big_Endian",
+            "wordOrder": "Big_Endian"
+        },
+        "N": {
+            "label": "Number of Modules",
+            "description": "Number of Modules",
+            "registerAddr": 41313,
+            "count": 1,
+            "scaleFactor": 0,
+            "datatype": "count",
+            "byteOrder": "Big_Endian",
+            "wordOrder": "Big_Endian"
+        },
+        "ID_1": {
+            "label": "Input ID",
+            "description": "Input ID",
+            "registerAddr": 41315,
+            "count": 1,
+            "scaleFactor": 0,
+            "datatype": "uint16",
+            "byteOrder": "Big_Endian",
+            "wordOrder": "Big_Endian"
+        },
+        "DCA160_1": {
+            "label": "DC Current",
+            "description": "DC Current",
+            "registerAddr": 41324,
+            "count": 1,
+            "scaleFactor": -1,
+            "datatype": "uint16",
+            "byteOrder": "Big_Endian",
+            "wordOrder": "Big_Endian"
+            "uint": "A"
+        },
+        "DCV160_1": {
+            "label": "DC Voltage",
+            "description": "DC Voltage",
+            "registerAddr": 41325,
+            "count": 1,
+            "scaleFactor": -1,
+            "datatype": "uint16",
+            "byteOrder": "Big_Endian",
+            "wordOrder": "Big_Endian"
+            "uint": "V"
+        },
+        "DCW160_1": {
+            "label": "DC Power",
+            "description": "DC Power",
+            "registerAddr": 41326,
+            "count": 1,
+            "scaleFactor": 0,
+            "datatype": "uint16",
+            "byteOrder": "Big_Endian",
+            "wordOrder": "Big_Endian"
+            "uint": "W"
+        },
+        "DCEvt_1": {
+            "label": "Module Events",
+            "description": "Module Events",
+            "registerAddr": 41334,
+            "count": 1,
+            "scaleFactor": 0,
+            "datatype": "bitfield32",
+            "byteOrder": "Big_Endian",
+            "wordOrder": "Big_Endian"
+        },
+        "ID_2": {
+            "label": "Input ID",
+            "description": "Input ID",
+            "registerAddr": 41335,
+            "count": 1,
+            "scaleFactor": 0,
+            "datatype": "uint16",
+            "byteOrder": "Big_Endian",
+            "wordOrder": "Big_Endian"
+        },
+        "DCA160_2": {
+            "label": "DC Current",
+            "description": "DC Current",
+            "registerAddr": 41344,
+            "count": 1,
+            "scaleFactor": -1,
+            "datatype": "uint16",
+            "byteOrder": "Big_Endian",
+            "wordOrder": "Big_Endian"
+            "uint": "A"
+        },
+        "DCV160_2": {
+            "label": "DC Voltage",
+            "description": "DC Voltage",
+            "registerAddr": 41345,
+            "count": 1,
+            "scaleFactor": -1,
+            "datatype": "uint16",
+            "byteOrder": "Big_Endian",
+            "wordOrder": "Big_Endian"
+            "uint": "V"
+        },
+        "DCW160_2": {
+            "label": "DC Power",
+            "description": "DC Power",
+            "registerAddr": 41346,
+            "count": 1,
+            "scaleFactor": 0,
+            "datatype": "uint16",
+            "byteOrder": "Big_Endian",
+            "wordOrder": "Big_Endian"
+            "uint": "W"
+        },
+        "DCEvt_2": {
+            "label": "Module Events",
+            "description": "Module Events",
+            "registerAddr": 41354,
+            "count": 1,
+            "scaleFactor": 0,
+            "datatype": "bitfield32",
+            "byteOrder": "Big_Endian",
+            "wordOrder": "Big_Endian"
+        },
+        "ID_3": {
+            "label": "Input ID",
+            "description": "Input ID",
+            "registerAddr": 41355,
+            "count": 1,
+            "scaleFactor": 0,
+            "datatype": "uint16",
+            "byteOrder": "Big_Endian",
+            "wordOrder": "Big_Endian"
+        },
+        "DCA160_3": {
+            "label": "DC Current",
+            "description": "DC Current",
+            "registerAddr": 41363,
+            "count": 1,
+            "scaleFactor": -1,
+            "datatype": "uint16",
+            "byteOrder": "Big_Endian",
+            "wordOrder": "Big_Endian"
+            "uint": "A"
+        },
+        "DCV160_3": {
+            "label": "DC Voltage",
+            "description": "DC Voltage",
+            "registerAddr": 41364,
+            "count": 1,
+            "scaleFactor": -1,
+            "datatype": "uint16",
+            "byteOrder": "Big_Endian",
+            "wordOrder": "Big_Endian"
+            "uint": "V"
+        },
+        "DCW160_3": {
+            "label": "DC Power",
+            "description": "DC Power",
+            "registerAddr": 41365,
+            "count": 1,
+            "scaleFactor": 0,
+            "datatype": "uint16",
+            "byteOrder": "Big_Endian",
+            "wordOrder": "Big_Endian"
+            "uint": "W"
+        },
+        "DCEvt_3": {
+            "label": "Module Events",
+            "description": "Module Events",
+            "registerAddr": 41374,
+            "count": 1,
+            "scaleFactor": 0,
+            "datatype": "bitfield32",
+            "byteOrder": "Big_Endian",
+            "wordOrder": "Big_Endian"
+        },
+        "ID_4": {
+            "label": "Input ID",
+            "description": "Input ID",
+            "registerAddr": 41375,
+            "count": 1,
+            "scaleFactor": 0,
+            "datatype": "uint16",
+            "byteOrder": "Big_Endian",
+            "wordOrder": "Big_Endian"
+        },
+        "DCA160_4": {
+            "label": "DC Current",
+            "description": "DC Current",
+            "registerAddr": 41384,
+            "count": 1,
+            "scaleFactor": -1,
+            "datatype": "uint16",
+            "byteOrder": "Big_Endian",
+            "wordOrder": "Big_Endian"
+            "uint": "A"
+        },
+        "DCV160_4": {
+            "label": "DC Voltage",
+            "description": "DC Voltage",
+            "registerAddr": 41385,
+            "count": 1,
+            "scaleFactor": -1,
+            "datatype": "uint16",
+            "byteOrder": "Big_Endian",
+            "wordOrder": "Big_Endian"
+            "uint": "V"
+        },
+        "DCW160_4": {
+            "label": "DC Power",
+            "description": "DC Power",
+            "registerAddr": 41386,
+            "count": 1,
+            "scaleFactor": 0,
+            "datatype": "uint16",
+            "byteOrder": "Big_Endian",
+            "wordOrder": "Big_Endian"
+            "uint": "W"
+        },
+        "DCEvt_4": {
+            "label": "Module Events",
+            "description": "Module Events",
+            "registerAddr": 41394,
+            "count": 1,
+            "scaleFactor": 0,
+            "datatype": "bitfield32",
+            "byteOrder": "Big_Endian",
+            "wordOrder": "Big_Endian"
+        },
+        "ID_5": {
+            "label": "Input ID",
+            "description": "Input ID",
+            "registerAddr": 41395,
+            "count": 1,
+            "scaleFactor": 0,
+            "datatype": "uint16",
+            "byteOrder": "Big_Endian",
+            "wordOrder": "Big_Endian"
+        },
+        "DCA160_5": {
+            "label": "DC Current",
+            "description": "DC Current",
+            "registerAddr": 41404,
+            "count": 1,
+            "scaleFactor": -1,
+            "datatype": "uint16",
+            "byteOrder": "Big_Endian",
+            "wordOrder": "Big_Endian"
+            "uint": "A"
+        },
+        "DCV160_5": {
+            "label": "DC Voltage",
+            "description": "DC Voltage",
+            "registerAddr": 41405,
+            "count": 1,
+            "scaleFactor": -1,
+            "datatype": "uint16",
+            "byteOrder": "Big_Endian",
+            "wordOrder": "Big_Endian"
+            "uint": "V"
+        },
+        "DCW160_5": {
+            "label": "DC Power",
+            "description": "DC Power",
+            "registerAddr": 41406,
+            "count": 1,
+            "scaleFactor": 0,
+            "datatype": "uint16",
+            "byteOrder": "Big_Endian",
+            "wordOrder": "Big_Endian"
+            "uint": "W"
+        },
+        "DCEvt_5": {
+            "label": "Module Events",
+            "description": "Module Events",
+            "registerAddr": 41414,
+            "count": 1,
+            "scaleFactor": 0,
+            "datatype": "bitfield32",
+            "byteOrder": "Big_Endian",
+            "wordOrder": "Big_Endian"
+        },
+        "ID_6": {
+            "label": "Input ID",
+            "description": "Input ID",
+            "registerAddr": 41415,
+            "count": 1,
+            "scaleFactor": 0,
+            "datatype": "uint16",
+            "byteOrder": "Big_Endian",
+            "wordOrder": "Big_Endian"
+        },
+        "DCA160_6": {
+            "label": "DC Current",
+            "description": "DC Current",
+            "registerAddr": 41424,
+            "count": 1,
+            "scaleFactor": -1,
+            "datatype": "uint16",
+            "byteOrder": "Big_Endian",
+            "wordOrder": "Big_Endian"
+            "uint": "A"
+        },
+        "DCV160_6": {
+            "label": "DC Voltage",
+            "description": "DC Voltage",
+            "registerAddr": 41425,
+            "count": 1,
+            "scaleFactor": -1,
+            "datatype": "uint16",
+            "byteOrder": "Big_Endian",
+            "wordOrder": "Big_Endian"
+            "uint": "V"
+        },
+        "DCW160_6": {
+            "label": "DC Power",
+            "description": "DC Power",
+            "registerAddr": 41426,
+            "count": 1,
+            "scaleFactor": 0,
+            "datatype": "uint16",
+            "byteOrder": "Big_Endian",
+            "wordOrder": "Big_Endian"
+            "uint": "W"
+        },
+        "DCEvt_6": {
+            "label": "Module Events",
+            "description": "Module Events",
+            "registerAddr": 41434,
+            "count": 1,
+            "scaleFactor": 0,
+            "datatype": "bitfield32",
+            "byteOrder": "Big_Endian",
+            "wordOrder": "Big_Endian"
+        },
+        "ID_7": {
+            "label": "Input ID",
+            "description": "Input ID",
+            "registerAddr": 41435,
+            "count": 1,
+            "scaleFactor": 0,
+            "datatype": "uint16",
+            "byteOrder": "Big_Endian",
+            "wordOrder": "Big_Endian"
+        },
+        "DCA160_7": {
+            "label": "DC Current",
+            "description": "DC Current",
+            "registerAddr": 41444,
+            "count": 1,
+            "scaleFactor": -1,
+            "datatype": "uint16",
+            "byteOrder": "Big_Endian",
+            "wordOrder": "Big_Endian"
+            "uint": "A"
+        },
+        "DCV160_7": {
+            "label": "DC Voltage",
+            "description": "DC Voltage",
+            "registerAddr": 41445,
+            "count": 1,
+            "scaleFactor": -1,
+            "datatype": "uint16",
+            "byteOrder": "Big_Endian",
+            "wordOrder": "Big_Endian"
+            "uint": "V"
+        },
+        "DCW160_7": {
+            "label": "DC Power",
+            "description": "DC Power",
+            "registerAddr": 41446,
+            "count": 1,
+            "scaleFactor": 0,
+            "datatype": "uint16",
+            "byteOrder": "Big_Endian",
+            "wordOrder": "Big_Endian"
+            "uint": "W"
+        },
+        "DCEvt_7": {
+            "label": "Module Events",
+            "description": "Module Events",
+            "registerAddr": 41454,
+            "count": 1,
+            "scaleFactor": 0,
+            "datatype": "bitfield32",
+            "byteOrder": "Big_Endian",
+            "wordOrder": "Big_Endian"
+        },
+        "ID_8": {
+            "label": "Input ID",
+            "description": "Input ID",
+            "registerAddr": 41455,
+            "count": 1,
+            "scaleFactor": 0,
+            "datatype": "uint16",
+            "byteOrder": "Big_Endian",
+            "wordOrder": "Big_Endian"
+        },
+        "DCA160_8": {
+            "label": "DC Current",
+            "description": "DC Current",
+            "registerAddr": 41464,
+            "count": 1,
+            "scaleFactor": -1,
+            "datatype": "uint16",
+            "byteOrder": "Big_Endian",
+            "wordOrder": "Big_Endian"
+            "uint": "A"
+        },
+        "DCV160_8": {
+            "label": "DC Voltage",
+            "description": "DC Voltage",
+            "registerAddr": 41465,
+            "count": 1,
+            "scaleFactor": -1,
+            "datatype": "uint16",
+            "byteOrder": "Big_Endian",
+            "wordOrder": "Big_Endian"
+            "uint": "V"
+        },
+        "DCW160_8": {
+            "label": "DC Power",
+            "description": "DC Power",
+            "registerAddr": 41466,
+            "count": 1,
+            "scaleFactor": 0,
+            "datatype": "uint16",
+            "byteOrder": "Big_Endian",
+            "wordOrder": "Big_Endian"
+            "uint": "W"
+        },
+        "DCEvt_8": {
+            "label": "Module Events",
+            "description": "Module Events",
+            "registerAddr": 41474,
+            "count": 1,
+            "scaleFactor": 0,
+            "datatype": "bitfield32",
+            "byteOrder": "Big_Endian",
+            "wordOrder": "Big_Endian"
+        },
+        "ID_9": {
+            "label": "Input ID",
+            "description": "Input ID",
+            "registerAddr": 41475,
+            "count": 1,
+            "scaleFactor": 0,
+            "datatype": "uint16",
+            "byteOrder": "Big_Endian",
+            "wordOrder": "Big_Endian"
+        },
+        "DCA160_9": {
+            "label": "DC Current",
+            "description": "DC Current",
+            "registerAddr": 41484,
+            "count": 1,
+            "scaleFactor": -1,
+            "datatype": "uint16",
+            "byteOrder": "Big_Endian",
+            "wordOrder": "Big_Endian"
+            "uint": "A"
+        },
+        "DCV160_9": {
+            "label": "DC Voltage",
+            "description": "DC Voltage",
+            "registerAddr": 41485,
+            "count": 1,
+            "scaleFactor": -1,
+            "datatype": "uint16",
+            "byteOrder": "Big_Endian",
+            "wordOrder": "Big_Endian"
+            "uint": "V"
+        },
+        "DCW160_9": {
+            "label": "DC Power",
+            "description": "DC Power",
+            "registerAddr": 41486,
+            "count": 1,
+            "scaleFactor": 0,
+            "datatype": "uint16",
+            "byteOrder": "Big_Endian",
+            "wordOrder": "Big_Endian"
+            "uint": "W"
+        },
+        "DCEvt_9": {
+            "label": "Module Events",
+            "description": "Module Events",
+            "registerAddr": 41494,
+            "count": 1,
+            "scaleFactor": 0,
+            "datatype": "bitfield32",
+            "byteOrder": "Big_Endian",
+            "wordOrder": "Big_Endian"
+        },
+        "ID_10": {
+            "label": "Input ID",
+            "description": "Input ID",
+            "registerAddr": 41495,
+            "count": 1,
+            "scaleFactor": 0,
+            "datatype": "uint16",
+            "byteOrder": "Big_Endian",
+            "wordOrder": "Big_Endian"
+        },
+        "DCA160_10": {
+            "label": "DC Current",
+            "description": "DC Current",
+            "registerAddr": 41504,
+            "count": 1,
+            "scaleFactor": -1,
+            "datatype": "uint16",
+            "byteOrder": "Big_Endian",
+            "wordOrder": "Big_Endian"
+            "uint": "A"
+        },
+        "DCV160_10": {
+            "label": "DC Voltage",
+            "description": "DC Voltage",
+            "registerAddr": 41505,
+            "count": 1,
+            "scaleFactor": -1,
+            "datatype": "uint16",
+            "byteOrder": "Big_Endian",
+            "wordOrder": "Big_Endian"
+            "uint": "V"
+        },
+        "DCW160_10": {
+            "label": "DC Power",
+            "description": "DC Power",
+            "registerAddr": 41506,
+            "count": 1,
+            "scaleFactor": 0,
+            "datatype": "uint16",
+            "byteOrder": "Big_Endian",
+            "wordOrder": "Big_Endian"
+            "uint": "W"
+        },
+        "DCEvt_10": {
+            "label": "Module Events",
+            "description": "Module Events",
+            "registerAddr": 41514,
+            "count": 1,
+            "scaleFactor": 0,
+            "datatype": "bitfield32",
+            "byteOrder": "Big_Endian",
+            "wordOrder": "Big_Endian"
+        },
+        "ID_11": {
+            "label": "Input ID",
+            "description": "Input ID",
+            "registerAddr": 41515,
+            "count": 1,
+            "scaleFactor": 0,
+            "datatype": "uint16",
+            "byteOrder": "Big_Endian",
+            "wordOrder": "Big_Endian"
+        },
+        "DCA160_11": {
+            "label": "DC Current",
+            "description": "DC Current",
+            "registerAddr": 41524,
+            "count": 1,
+            "scaleFactor": -1,
+            "datatype": "uint16",
+            "byteOrder": "Big_Endian",
+            "wordOrder": "Big_Endian"
+            "uint": "A"
+        },
+        "DCV160_11": {
+            "label": "DC Voltage",
+            "description": "DC Voltage",
+            "registerAddr": 41525,
+            "count": 1,
+            "scaleFactor": -1,
+            "datatype": "uint16",
+            "byteOrder": "Big_Endian",
+            "wordOrder": "Big_Endian"
+            "uint": "V"
+        },
+        "DCW160_11": {
+            "label": "DC Power",
+            "description": "DC Power",
+            "registerAddr": 41526,
+            "count": 1,
+            "scaleFactor": 0,
+            "datatype": "uint16",
+            "byteOrder": "Big_Endian",
+            "wordOrder": "Big_Endian"
+            "uint": "W"
+        },
+        "DCEvt_11": {
+            "label": "Module Events",
+            "description": "Module Events",
+            "registerAddr": 41534,
+            "count": 1,
+            "scaleFactor": 0,
+            "datatype": "bitfield32",
+            "byteOrder": "Big_Endian",
+            "wordOrder": "Big_Endian"
+        },
+        "ID_12": {
+            "label": "Input ID",
+            "description": "Input ID",
+            "registerAddr": 41535,
+            "count": 1,
+            "scaleFactor": 0,
+            "datatype": "uint16",
+            "byteOrder": "Big_Endian",
+            "wordOrder": "Big_Endian"
+        },
+        "DCA160_12": {
+            "label": "DC Current",
+            "description": "DC Current",
+            "registerAddr": 41544,
+            "count": 1,
+            "scaleFactor": -1,
+            "datatype": "uint16",
+            "byteOrder": "Big_Endian",
+            "wordOrder": "Big_Endian"
+            "uint": "A"
+        },
+        "DCV160_12": {
+            "label": "DC Voltage",
+            "description": "DC Voltage",
+            "registerAddr": 41545,
+            "count": 1,
+            "scaleFactor": -1,
+            "datatype": "uint16",
+            "byteOrder": "Big_Endian",
+            "wordOrder": "Big_Endian"
+            "uint": "V"
+        },
+        "DCW160_12": {
+            "label": "DC Power",
+            "description": "DC Power",
+            "registerAddr": 41546,
+            "count": 1,
+            "scaleFactor": 0,
+            "datatype": "uint16",
+            "byteOrder": "Big_Endian",
+            "wordOrder": "Big_Endian"
+            "uint": "W"
+        },
+        "DCEvt_12": {
+            "label": "Module Events",
+            "description": "Module Events",
+            "registerAddr": 41554,
+            "count": 1,
+            "scaleFactor": 0,
+            "datatype": "bitfield32",
+            "byteOrder": "Big_Endian",
+            "wordOrder": "Big_Endian"
+        }
+    },
+    "constants": {
+        "enum16_t": {
+            "list_enum16_t": {
+                "PVConn": "PV_Conn_t",
+                "St": "State_t",
+                "Conn": "Connect_t",
+                "ECPConn": "Connect_t",
+                "WMaxLim_Ena": "Enable_t",
+                "OutPFSet_Ena": "Enable_t",
+                "VArPct_Ena": "Enable_t"
+            },
+            "Connect_t": {
+                "0": "DISCONNECT",
+                "1": "CONNECT"
+            },
+            "PV_Conn_t": {
+                "0": "CONNECTED",
+                "1": "AVAILABLE",
+                "2": "OPERATING",
+                "3": "TEST"
+            },
+            "State_t": {
+                "1": "OFF",
+                "2": "SLEEPING",
+                "3": "STARTING",
+                "4": "MPPT",
+                "5": "THROTTLED",
+                "6": "SHUTTING_DOWN",
+                "7": "FAULT",
+                "8": "STANDBY"
+            },
+            "Enable_t": {
+                "0": "DISABLED",
+                "1": "ENABLE"
+            }
+        },
+        "bitfield32_t": {
+            "list_bitfield32_t": {
+                "Evt1": "Event_1_t",
+                "Evt2": "Event_2_t",
+                "Evt_Glo": "Event_Global_t"
+            },
+            "Event_1_t": {
+                "0": "NORMAL",
+                "1": "GROUND_FAULT",
+                "2": "DC_OVER_VOLT",
+                "4": "AC_DISCONNECT",
+                "8": "DC_DISCONNECT",
+                "16": "GRID_DISCONNECT",
+                "32": "CABINET_OPEN",
+                "64": "MANUAL_SHUTDOWN",
+                "128": "OVER_TEMP",
+                "256": "OVER_FREQUENCY",
+                "512": "UNDER_FREQUENCY",
+                "1024": "AC_OVER_VOLT",
+                "2048": "AC_UNDER_VOLT",
+                "4096": "BLOWN_STRING_FUSE",
+                "8192": "UNDER_TEMP",
+                "16384": "MEMORY_LOSS",
+                "32768": "HW_TEST_FAILURE"
+            },
+            "Event_2_t": {
+                "0": "NORMAL"
+            },
+            "Event_Global_t": {
+                "0": "NORMAL",
+                "4194304": "OTHER"
+            }
+        }
+    }
+}
