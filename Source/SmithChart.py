@@ -46,7 +46,7 @@ def plot_Smith(a_vector, b_vector, color, fig = None, ax = None):
     plt.show()
     return fig, ax
     
-def constant_module_gamma_function(gamma_module):
+def get_gm_isometric_equation(gamma_module):
     if gamma_module > 1:
         print("Reflection coefficient's module can not larger 1")
         return None
@@ -76,9 +76,7 @@ def get_Smith_constant_gamma_module_locus(gamma_module, color = None, fig = None
     # plt.show()
     return r, phi
 
-def get_Smith_constant_realpath_locus(real_value, color = None, fig = None, ax = None):
-    # if fig is None and ax is None:
-    #     fig, ax = plt.subplots(subplot_kw={'projection': 'polar'})
+def get_Smith_constant_realpath_locus(real_value):
     a = np.repeat(real_value, 360)
     b = np.linspace(-10, 10, num = 360)
     c = (a**2 + b**2 - 1)/((a+1)**2 + b**2)
@@ -86,11 +84,16 @@ def get_Smith_constant_realpath_locus(real_value, color = None, fig = None, ax =
     r = np.sqrt(c**2 + d**2)
     phi = np.arctan(d/c)
     for index in range(len(phi)-1):
+        while phi[index] > np.pi:
+            phi[index : ] -= 2*np.pi
+        while phi[index] < -np.pi:
+            phi[index : ] += 2*np.pi
         while abs(phi[index]-phi[index+1]) >= np.pi/2:
             if phi[index+1] > phi[index]:
-                phi[index+1:] -= np.pi
+                phi[index+1 : ] -= np.pi
             else:
-                phi[index+1:] += np.pi
-    # ax.plot(phi, r)
-    # plt.show()
+                phi[index+1 : ] += np.pi
+        if phi[index+1] < -np.pi/2:
+            if index > 180:
+                phi[index+1 : ] += np.pi
     return r, phi
