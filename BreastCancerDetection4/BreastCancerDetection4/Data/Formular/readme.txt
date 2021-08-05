@@ -1,1 +1,0 @@
-CategoricalCrossentropy : https://nttuan8.com/bai-7-gioi-thieu-keras-va-bai-toan-phan-loai-anh/
