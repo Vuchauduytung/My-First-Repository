@@ -34,17 +34,24 @@ def main():
     
     input("Press Enter to stop this script >>")
     
-def caculate_Gamma_short_circuit_stub(Y_inter_value, Y_init_value, Gamma_init_value, Gamma_eq_value, gate): 
+def caculate_Gamma_short_circuit_stub(Y_inter_value, Y_init_value, Gamma_eq_value, gate): 
+    # Tính toán giá trị của hệ số phản xạ tại giao điểm và tại điểm nhìn vào mạch stub
+    # Y_inter_value: dẫn kháng tại điểm giao
+    # Y_init_value: dẫn kháng tại điểm ban đầu
+    # Gamma_eq_value: hệ số phản xạ tại điểm nhìn vào mạch
+    # gate: cổng của ma trận tán xạ
+    # ret: Gamma_inter_value: hệ số phản xạ tại điểm giao
+    #       Gamma_stub_in_value: hệ số phản xạ nhìn vào đầu mạch stub
     lamda = symbols('\u03BB')   
     if gate == 'input':
         Y_inter, Y_stub_in, Y_init = symbols('Y{} Y{} Y{}'.format('a_', 'stub_', 's_'))
         Z_inter, Z_stub_in = symbols('Z{}, Z{}'.format('a_', 'stub_'))
-        Gamma_inter, Gamma_stub_in, Gamma_eq = symbols('\u0393{} \u0393{} \u0393{}'.format('a', 'stub', 's_max'))
+        Gamma_inter, Gamma_stub_in = symbols('\u0393{} \u0393{}'.format('a', 'stub'))
         l, d = symbols('l{} d{}'.format(get_sub('1'), get_sub('1')))
     elif gate == 'output':
         Y_inter, Y_stub_in, Y_init = symbols('Y{} Y{} Y{}'.format('b_', 'stub_', 'L_'))
         Z_inter, Z_stub_in = symbols('Z{}, Z{}'.format('b_', 'stub_'))
-        Gamma_inter, Gamma_stub_in, Gamma_eq = symbols('\u0393{} \u0393{} \u0393{}'.format('b', 'stub', 'L_max'))
+        Gamma_inter, Gamma_stub_in = symbols('\u0393{} \u0393{}'.format('b', 'stub'))
         l, d = symbols('l{} d{}'.format(get_sub('2'), get_sub('2')))
     Y_stub_in_value = Y_inter_value - Y_init_value
     print('With {} = {:.2f}, we have: \n'.format(Y_inter, Y_inter_value))
@@ -83,6 +90,12 @@ def caculate_Gamma_short_circuit_stub(Y_inter_value, Y_init_value, Gamma_init_va
     return Gamma_inter_value, Gamma_stub_in_value
     
 def plot_smith_chart(Y_inter_value, Y_init_value, Gamma_final_value, Gamma_init_value ,gate):
+    # Vẽ đồ thị Smith từ thông số cho trước
+    # Y_init_value: Dẫn kháng điểm ban đầu
+    # Y_inter_value: Dẫn kháng điểm giao
+    # Gamma_final_value: Hệ số phản xạ điểm đích
+    # Gamma_init_value: Hệ số phản xạ điểm ban đầu
+    # Cổng của ma trận tán xạ
     if gate == 'input':
         Y_inter, Y_stub_in, Y_init, Y_result = symbols('Y{} Y{} Y{} Y{}'.format('a', get_sub('stub'), get_sub('s'), get_sub('s_max')))
         Z_inter, Z_stub_in, Z_init, Z_result = symbols('Z{}, Z{} Z{} Z{}'.format('a', get_sub('stub'), get_sub('s'), get_sub('s_max')))
@@ -97,7 +110,7 @@ def plot_smith_chart(Y_inter_value, Y_init_value, Gamma_final_value, Gamma_init_
         except TypeError:
             ax1 = axes[0]
             ax2 = axes[1]
-        Gamma_inter_val, Gamma_stub_in_val = caculate_Gamma_short_circuit_stub(Y_inter_val, Y_init_value, Gamma_init_value, Gamma_final_value, gate)
+        Gamma_inter_val, Gamma_stub_in_val = caculate_Gamma_short_circuit_stub(Y_inter_val, Y_init_value, Gamma_final_value, gate)
         p1 = ax1.scatter(phase(Gamma_final_value), abs(Gamma_final_value), marker='o', s=100, color = 'r', alpha = 1, label = Z_result)
         p2 = ax1.scatter(phase(Gamma_final_value) + np.pi, abs(Gamma_final_value), marker='x', linewidths = 3, color = 'r', alpha = 1, label = Y_result)
         p3 = ax1.scatter(phase(Gamma_init_value), abs(Gamma_init_value), marker='o', s=100, color = 'b', alpha = 1, label = Z_init)
@@ -135,6 +148,9 @@ def plot_smith_chart(Y_inter_value, Y_init_value, Gamma_final_value, Gamma_init_
     fig.show()
     
 def get_sub(x):
+    # Chuyển đổi từ từ ký tự bình thường sang subscript
+    # x ký tự bình thường
+    # ký tự dạng subscript
     normal = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+-=()"
     sub_s = "ₐ₈CDₑբGₕᵢⱼₖₗₘₙₒₚQᵣₛₜᵤᵥwₓᵧZₐ♭꜀ᑯₑբ₉ₕᵢⱼₖₗₘₙₒₚ૧ᵣₛₜᵤᵥwₓᵧ₂₀₁₂₃₄₅₆₇₈₉₊₋₌₍₎"
     res = x.maketrans(''.join(normal), ''.join(sub_s))
@@ -221,6 +237,10 @@ def myfunction(Zw_value, ZL_value, Gamma_g_value, gate):
     plot_smith_chart(Yit_norm_value, YL_norm_value, Gamma_eq_value, Gamma_L_value, gate)
 
 def get_wire_length(src_phase, des_phase):
+    # Tính chiều dài đoạn cần bù thêm (về phía nguồn) để có pha dịch từ src_phase sang des_phase (pha của hệ số phản xạ)
+    # src_phase ban đầu
+    # des-phase pha lúc sau
+    # ret đoạn dây cần bù 
     while src_phase > 2*np.pi:
         src_phase -= 2*np.pi
     while src_phase < 0:
