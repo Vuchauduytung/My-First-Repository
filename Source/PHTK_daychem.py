@@ -35,13 +35,18 @@ def main():
     input("Press Enter to stop this script >>")
     
 def caculate_Gamma_short_circuit_stub(Y_inter_value, Y_init_value, Gamma_eq_value, gate): 
-    # Tính toán giá trị của hệ số phản xạ tại giao điểm và tại điểm nhìn vào mạch stub
-    # Y_inter_value: dẫn kháng tại điểm giao
-    # Y_init_value: dẫn kháng tại điểm ban đầu
-    # Gamma_eq_value: hệ số phản xạ tại điểm nhìn vào mạch
-    # gate: cổng của ma trận tán xạ
-    # ret: Gamma_inter_value: hệ số phản xạ tại điểm giao
-    #       Gamma_stub_in_value: hệ số phản xạ nhìn vào đầu mạch stub
+    """
+        @ Brief:    Calculate the reflectance value at the intersection and the point looking at the stub circuit
+        @ Param:    
+                    Y_inter_value: Conductive resistance at the intersection
+                    Y_init_value: Conductive resistance at the initial point
+                    Gamma_eq_value: reflectance at the point looking at the circuit
+                    gate: The gate of the scattering matrix
+        @ Retval    
+                    Gamma_inter_value: reflectance at the intersection
+                    Gamma_stub_in_value: reflectance looking at the circuit
+    """
+    
     lamda = symbols('\u03BB')   
     if gate == 'input':
         Y_inter, Y_stub_in, Y_init = symbols('Y{} Y{} Y{}'.format('a_', 'stub_', 's_'))
@@ -90,12 +95,15 @@ def caculate_Gamma_short_circuit_stub(Y_inter_value, Y_init_value, Gamma_eq_valu
     return Gamma_inter_value, Gamma_stub_in_value
     
 def plot_smith_chart(Y_inter_value, Y_init_value, Gamma_final_value, Gamma_init_value ,gate):
-    # Vẽ đồ thị Smith từ thông số cho trước
-    # Y_init_value: Dẫn kháng điểm ban đầu
-    # Y_inter_value: Dẫn kháng điểm giao
-    # Gamma_final_value: Hệ số phản xạ điểm đích
-    # Gamma_init_value: Hệ số phản xạ điểm ban đầu
-    # Cổng của ma trận tán xạ
+    """
+        @ BriefL:   Draw the Smith graph from known parameters
+        @ Param:    
+                    Y_init_value: Conductive resistance at the initial point
+                    Y_inter_value: Conductive resistance at the intersection
+                    Gamma_final_value: reflectance at the destination point
+                    Gamma_init_value: reflectance at the initial point
+                    gate: The gate of the scattering matrix
+    """
     if gate == 'input':
         Y_inter, Y_stub_in, Y_init, Y_result = symbols('Y{} Y{} Y{} Y{}'.format('a', get_sub('stub'), get_sub('s'), get_sub('s_max')))
         Z_inter, Z_stub_in, Z_init, Z_result = symbols('Z{}, Z{} Z{} Z{}'.format('a', get_sub('stub'), get_sub('s'), get_sub('s_max')))
@@ -148,9 +156,11 @@ def plot_smith_chart(Y_inter_value, Y_init_value, Gamma_final_value, Gamma_init_
     fig.show()
     
 def get_sub(x):
-    # Chuyển đổi từ từ ký tự bình thường sang subscript
-    # x ký tự bình thường
-    # ký tự dạng subscript
+    """
+        @ Brief: Transform the characters from normal normal format to subscript format
+        @ Parma: x: Normal characters
+        @ Retval: Characters in subscript format  
+    """
     normal = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+-=()"
     sub_s = "ₐ₈CDₑբGₕᵢⱼₖₗₘₙₒₚQᵣₛₜᵤᵥwₓᵧZₐ♭꜀ᑯₑբ₉ₕᵢⱼₖₗₘₙₒₚ૧ᵣₛₜᵤᵥwₓᵧ₂₀₁₂₃₄₅₆₇₈₉₊₋₌₍₎"
     res = x.maketrans(''.join(normal), ''.join(sub_s))
@@ -161,17 +171,17 @@ def myfunction(Zw_value, ZL_value, Gamma_g_value, gate):
         @brief      Caculate and display result for impedance matching problem
         @param      Zw_value          wire impedance
         @param      ZL_value          load impedance
-        @param      Gamma_eq_value    equivalent reflection coefficient looking at starting point of the line
+        @param      Gamma_eq_value    equivalent reflectance looking at starting point of the line
         Explain:
-            Gamma_L     reflection coefficient looking at the end of the line
-            Gamma_eq    reflection coefficient looking at starting point of the line
-            Gamma_g     reflection coefficient at gate of scattering matrix module
+            Gamma_L     reflectance looking at the end of the line
+            Gamma_eq    reflectance looking at starting point of the line
+            Gamma_g     reflectance at gate of scattering matrix module
             Zeq         equivalent impedance looking at starting point of the line
             Zeq_norm    equivalent impedance looking at starting point of the line normalized to Z0
             ZL          load impedance
             ZL_norm     load impedance normalized to Z0
             YL_norm     load admittance normalized to Z0
-            Yit_norm    constant real value and reflection coefficient' module intersection 
+            Yit_norm    constant real value and reflectance' module intersection 
             admittance normalized to Z0
     """
     
@@ -212,11 +222,11 @@ def myfunction(Zw_value, ZL_value, Gamma_g_value, gate):
     YL_norm_value = 1/ZL_norm_value
     print('{} = 1/{} = {:.2f}'.format(YL_norm, ZL_norm, YL_norm_value))
     print('\n')
-    # Module value of reflection coefficient looking at starting point of the line
+    # Module value of reflectance looking at starting point of the line
     Gamma_eq_mv = abs(Gamma_eq_value)       
     print('{} = {:.2f}'.format(module_Gamma_S_max, Gamma_eq_mv))
     print('\n')
-    # Locus equation of reflection coefficient's module isometric line
+    # Locus equation of reflectance's module isometric line
     gm_isometric_equation = get_gm_isometric_equation(Gamma_eq_mv)
     # Real value of load admittance normalized to Z0
     YL_norm_rv = YL_norm_value.real
@@ -237,10 +247,14 @@ def myfunction(Zw_value, ZL_value, Gamma_g_value, gate):
     plot_smith_chart(Yit_norm_value, YL_norm_value, Gamma_eq_value, Gamma_L_value, gate)
 
 def get_wire_length(src_phase, des_phase):
-    # Tính chiều dài đoạn cần bù thêm (về phía nguồn) để có pha dịch từ src_phase sang des_phase (pha của hệ số phản xạ)
-    # src_phase ban đầu
-    # des-phase pha lúc sau
-    # ret đoạn dây cần bù 
+    """
+        @ Brief:    Calculate the wire length needs to be added toward the source to get phase shift form 
+                    src_phase to des_phase (phase of the reflectance)
+        @ Param:    
+                    src_phase: Initial phase
+                    des-phase: Destination phase
+        @ Retval:   The additional wire length needed
+    """
     while src_phase > 2*np.pi:
         src_phase -= 2*np.pi
     while src_phase < 0:

@@ -4,5 +4,4 @@ install:
     sympy
     skrf
     matplotlib
-    cmath
-    scipy
+    
