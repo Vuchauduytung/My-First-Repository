@@ -1,3 +1,4 @@
+# System framework
 import numpy as np
 from sympy import *
 import skrf as rf
@@ -5,6 +6,9 @@ from matplotlib.font_manager import FontProperties
 import matplotlib.pyplot as plt
 from SmithChart import *
 from cmath import *
+
+# User framework
+from Modules.Library.SmithClass import SmithPoint as SP
 
 
 # parameter
