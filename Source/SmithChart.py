@@ -7,10 +7,12 @@ import matplotlib.pyplot as plt
 from scipy.special import factorial
     
 def get_gm_isometric_equation(gamma_module):
-    # Tìm phương trình quỹ tích của đường đẳng độ lớn của hệ số phản xạ theo giá trị của
-    # trở kháng tại vị trí đó
-    # gamma_module: giá trị độ lớn của hệ số phản xạ
-    # ret: gamma_module_locus_function: phương trình quỹ tích cần tìm
+    """
+        @ Brief:    Find the locus equation of the isometric line of the reflectance according to the value
+                    of the impedance at that point
+        @ Param:    gamma_module: Thhe magnitude of the reflectance
+        @ Retval:   gamma_module_locus_function: The desired locus equation
+    """
     if gamma_module > 1:
         print("Reflection coefficient's module can not larger 1")
         return None
@@ -22,11 +24,14 @@ def get_gm_isometric_equation(gamma_module):
     return gamma_module_locus_function
 
 def find_cmg_cri_intersection(funtion, real_path):
-    # Tính giá trị của phần ảo của trở kháng tại điểm có phần thực và phương trình quan hệ
-    # giữa phần thực và phần ảo, và giá trị của phần thực của trở kháng cho trước
-    # funtion: phương trình quan hệ giữa phần thực và phần ảo
-    # real_path: giá trị của phần thực cho trước
-    # ret: img_path: giá trị của phần ảo tìm được
+    """
+        @ Brief:    Calculate the imaginary part value of the impedance at the point with real part and the
+                    relation equation between real and imaginary part, and the real part value of the given impedance
+        @ Param:    
+                    function: Relation equation between real and imaginary part
+                    real_path: Value of the given real part
+        @ Retval:   img_path: Value of the imaginary part
+    """
     a, b = symbols('a b', real=True)
     try:
         img_path = solv.solve(funtion.subs(a, real_path), b)
@@ -37,20 +42,31 @@ def find_cmg_cri_intersection(funtion, real_path):
     return img_path
 
 def get_Smith_constant_gamma_module_locus(gamma_module):
-    # Tạo ra 2 vector các chứa giá trị của độ lớn và góc pha (số phức)
-    # với góc pha chạy từ -pi tới pi và độ lớn là vector lặp lại của giá trị cho trước
-    # 2 vector tạo nên một đường tròn bán kính r, góc pha phi (hệ tọa độ phức)
-    # Ret: r: bán kính 
-    #      phi: góc pha
+    """
+        @ Brief:    Create 2 vectors that contain the magnitude and argument values (complex number)
+                    with argument ranging from -pi to pi and magnitude is the repeating vector of the given value
+                    2 Vectors creat a circle with radius r, phase phi (polar form)
+        @ Param:    gamma_module: Thhe magnitude of the reflectance
+        @ Retval:   
+                    r: Radius
+                    phi: Phase angle
+        
+    """
     r = np.repeat(gamma_module, 360)
     phi = np.linspace(- np.pi, np.pi, num = 360)
     return r, phi
 
 def get_Smith_constant_realpath_locus(real_value):
-    # Tạo ra 2 vector các chứa giá trị của độ lớn và góc pha (số phức) của hệ số phản xạ
-    # với điều kiện cho trước Z=a+bj là trở kháng tại điểm đang xét và a là một giá trị cho trước
-    # và b nằm trong 1 khoảng quy định sẵn
-    # Hàm này có tích hợp khả năng dự đoán xu hướng của góc pha dùng cho việc 
+    """
+        @ Brief:    Create 2 vectors contain the magnitude and argument values of the reflectance given 
+                    the condition that Z=a+bj is the impedance at the considering point and a is a given value
+                    and b is within a specified range
+        @ Param:    real_value: Real part value of Z
+        @ Retval:   
+                    r: Radius
+                    phi: Phase angle
+        @ Description:  This function has a built-in ability to predict the trend of the phase angle for drawing Smith chhart
+    """
     a = np.repeat(real_value, 360)
     b = np.linspace(-10, 10, num = 360)
     c = (a**2 + b**2 - 1)/((a+1)**2 + b**2)
