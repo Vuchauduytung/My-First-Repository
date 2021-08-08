@@ -297,7 +297,7 @@ def myfunction(src_point, gate_point, line_impedance, gate):
             Yit_norm_value = np.append(Yit_norm_value, value)
         except NameError:
             Yit_norm_value = np.array([value])
-   
+    print('\n')
     plot_smith_chart(Yit_norm_value, YL_norm_value, Gamma_eq_value, Gamma_L_value, gate)
 
 def get_wire_length(src_phase, des_phase):
