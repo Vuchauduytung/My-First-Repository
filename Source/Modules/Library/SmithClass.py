@@ -4,6 +4,12 @@ from cmath import *
 
 
 class SmithPoint:
+    # Class này chứa tất cả dữ liệu của một điểm trên mạch siêu cao tần
+    # Khởi tạo bằng cách đưa vào name và một giá trị bất kỳ, có thể là trở kháng
+    # hoặc dẫn kháng (admittance) chuẩn hóa hoặc tuyệt đối, hoặc giá trị của hệ số phản xạ
+    # class này cung cấp tất cả thông tin về các thông số liên quan tới điểm đó bao gồm
+    # ký hiệu, công thức và giá trị của các thông số liên quan tới điểm đó như, trở kháng,
+    # dẫn kháng, hệ số phản xạ, góc pha, module của hệ số phản xạ
     
     
     def __init__(self, name, line_impedance = None, impedance = None, admittance = None, gamma = None, Nomalize = False):
@@ -79,6 +85,11 @@ class SmithPoint:
                 raise Exception("Sorry, reflection coefficient value and admittance value are not related to each other")
             
     def get_impedance(self, Nomalize = False, round_index = 2): 
+        # Lấy giá trị trở kháng tại điểm đang xét
+        # Nomalize: giá trị trả về có chuẩn hóa hay k (True: có, False: không)
+        # round_index: chỉ số của số làm tròn đến sau dấu . thập phân
+        # ret: giá trị của trở kháng 
+        
         if Nomalize:
             result = self.Z_val/self.Z0_val
         else:
@@ -89,6 +100,11 @@ class SmithPoint:
             return np.round(result, round_index)
         
     def get_admittance(self, Nomalize = False, round_index = 2): 
+        # Lấy giá trị dẫn kháng tại điểm đang xét
+        # Nomalize: giá trị trả về có chuẩn hóa hay k (True: có, False: không)
+        # round_index: chỉ số của số làm tròn đến sau dấu . thập phân
+        # ret: giá trị của dẫn kháng 
+        
         if Nomalize:
             result = self.Y_val*self.Z0_val
         else:
@@ -99,6 +115,10 @@ class SmithPoint:
             return np.round(result, round_index)
         
     def get_gamma(self, round_index = 2):
+        # Lấy giá trị hệ số phản xạ tại điểm đang xét
+        # round_index: chỉ số của số làm tròn đến sau dấu . thập phân
+        # ret: giá trị của hệ số phản xạ 
+        
         if round_index is None:
             result = self.Gamma_val
         else:
@@ -110,13 +130,37 @@ class SmithPoint:
 
     
     def get_gamma_module(self, round_index = 2):
+        # Lấy giá trị magnitude hệ số phản xạ tại điểm đang xét
+        # round_index: chỉ số của số làm tròn đến sau dấu . thập phân
+        # ret: giá trị magnitude của hệ số phản xạ 
+        
         result = abs(self.Gamma_val)
         if round_index is None:
             return result
         else:
             return round(result, round_index)
         
+    def get_gamma_phase(self, round_index = 2, unit = 'radian'):
+        # Lấy giá trị phase hệ số phản xạ tại điểm đang xét
+        # round_index: chỉ số của số làm tròn đến sau dấu . thập phân
+        # ret: giá trị phase của hệ số phản xạ 
+        
+        if unit == 'radian':
+            result = phase(self.Gamma_val)
+        elif unit == 'dergee':
+            result = phase(self.Gamma_val) * 180/np.pi
+        else:
+            raise Exception("Unknown parameter: '{}'".format(unit))
+        if round_index is None:
+            return result
+        else:
+            return round(result, round_index)
+        
     def get_gamma_polar(self, round_index = 2, unit = 'dergee'):
+        # Lấy giá trị string hệ số phản xạ tại điểm đang xét
+        # round_index: chỉ số của số làm tròn đến sau dấu . thập phân
+        # ret: string giá trị của hệ số phản xạ dưới dạng cực (polar)
+        
         if self.Gamma_val == 0:
             result = '0'
         else:
@@ -133,25 +177,43 @@ class SmithPoint:
         return result
     
     def get_impedance_symbol(self, Nomalize = False):
+        # Lấy ký hiệu của trở kháng tại điểm đang xét
+        # Nomalize: ký hiệu trả về có chuẩn hóa hay k (True: có, False: không)
+        # ret: ký hiệu của trở kháng
+        
         if Nomalize:
             return self.z
         else:
             return self.Z
         
     def get_admittance_symbol(self, Nomalize = False):
+        # Lấy ký hiệu của dẫn kháng tại điểm đang xét
+        # Nomalize: ký hiệu trả về có chuẩn hóa hay k (True: có, False: không)
+        # ret: ký hiệu của dẫn kháng
+        
         if Nomalize:
             return self.y
         else:
             return self.Y
         
     def get_gamma_symbol(self):
+        # Lấy ký hiệu của hệ số phản xạ tại điểm đang xét
+        # ret: ký hiệu của hệ số phản xạ
+        
         return self.Gamma
     
     def get_module_gamma_symbol(self):
-        return Symbol('|' + str(self.Gamma) + '|')
+        # Lấy ký hiệu của magnitude hệ số phản xạ tại điểm đang xét
+        # ret: ký hiệu của magnitude hệ số phản xạ
         
+        return Symbol('|' + str(self.Gamma) + '|')
     
     def get_impedance_formula(self, depend_on = 'gamma'):
+        # Lấy công thức của trở kháng 
+        # depend_on: công thức của trở kháng tính theo
+        #   'gamma': tính theo hệ số phản xạ
+        #   'admittance': tính theo dẫn kháng
+        
         if depend_on == 'gamma':
             return self.Z_g
         elif depend_on == 'admittance':
@@ -160,6 +222,11 @@ class SmithPoint:
             raise Exception("Unknown parameter: '{}'".format(depend_on))
 
     def get_admittance_formula(self, depend_on = 'impedance'):
+        # Lấy công thức của dẫn kháng 
+        # depend_on: công thức của dẫn kháng tính theo
+        #   'gamma': tính theo hệ số phản xạ
+        #   'impedance': tính theo trở kháng
+        
         if depend_on == 'gamma':
             return self.Y_g
         elif depend_on == 'impedance':
@@ -168,9 +235,84 @@ class SmithPoint:
             raise Exception("Unknown parameter: '{}'".format(depend_on))
             
     def get_gamma_formula(self, depend_on = 'impedance'):
+        # Lấy công thức của hệ số phản xạ
+        # depend_on: công thức của hệ số phản xạ tính theo
+        #   'admittance': tính theo dẫn kháng
+        #   'impedance': tính theo trở kháng
+        
         if depend_on == 'impedance':
             return self.Gamma_z
         elif depend_on == 'admittance':
             return self.Gamma_y
         else:
             raise Exception("Unknown parameter: '{}'".format(depend_on))
+
+
+class SmithLine:
+    # Class này chứa tất cả thông tin của đoạn dây cần xét
+    # Khởi tạo bằng cách truyền tham số name (tên của đoạn dây),
+    # tham số point_1 (điểm đầu mút thứ nhất), point_2 (điểm đầu mút
+    # thứ 2)
+    # Lưu ý: point_1 và point_2 bắt buộc phải là object của SmithPoint class
+    
+    def __init__(self, name, lamda, point_1 = None, point_2 = None):
+        if isinstance(point_1, SmithPoint):
+            self.point_1 = point_1
+        else:
+            raise Exception("'point_1' parameter must be SmithPoint class's object")
+        if isinstance(point_2, SmithPoint):
+            self.point_2 = point_2
+        else:
+            raise Exception("'point_1' parameter must be SmithPoint class's object")
+        self.line = Symbol(name)
+        self.lamda = Symbol(lamda)
+    
+    def get_scaled_length(self, src_point = 1):
+        # Lấy giá trị tỷ lệ của đoạn dây
+        phase_point_1 = self.point_1.get_gamma_phase(round_index = None)
+        phase_point_2 = self.point_2.get_gamma_phase(round_index = None)
+        if src_point == 1:
+            scaled_length = self.get_wire_length(phase_point_1, phase_point_2)
+        elif src_point == 2:
+            scaled_length = self.get_wire_length(phase_point_2, phase_point_1)
+        else:
+            raise Exception("Invalid parameter for src_point. Value must be 1 or 2.")
+        return scaled_length
+            
+    def get_wire_length(src_phase, des_phase):
+        """
+        @ Brief:    Calculate the wire length needs to be added toward the source to get phase shift form 
+                    src_phase to des_phase (phase of the reflectance)
+        @ Param:    
+                    src_phase: Initial phase
+                    des-phase: Destination phase
+        @ Retval:   The additional wire length needed
+        """
+        
+        while src_phase > 2*np.pi:
+            src_phase -= 2*np.pi
+        while src_phase < 0:
+            src_phase += 2*np.pi
+        while des_phase > 2*np.pi:
+            des_phase -= 2*np.pi
+        while des_phase < 0:
+            des_phase += 2*np.pi
+        if src_phase < des_phase:
+            pass
+        elif src_phase > des_phase:
+            des_phase += 2*np.pi
+        else:
+            print("Source's phase equals destination's phase")
+        length = (des_phase - src_phase) * 0.5/(2*np.pi)
+        return length
+    
+    def get_absolute_length(self, src_point = 1, round_index = 2):
+        scaled_length = self.get_scaled_length(src_point = src_point)
+        if round_index is None:
+            absolute_length = scaled_length * self.lamda
+        else:
+            absolute_length = round(scaled_length, round_index) * self.lamda
+        return absolute_length
+    
+    def get_line_symbol(self):
+        return self.line

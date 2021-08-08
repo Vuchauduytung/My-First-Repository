@@ -8,6 +8,7 @@ from cmath import *
 
 # User framework
 from Modules.Library.SmithClass import SmithPoint as SP
+from Modules.Library.SmithClass import SmithLine as SL
 from Modules.Library.SmithChart import *
 
 # parameter
@@ -42,7 +43,7 @@ def main():
     
     input("Press Enter to stop this script >>")
     
-def caculate_Gamma_short_circuit_stub(Y_inter_value, Y_init_value, Gamma_eq_value, gate): 
+def caculate_Gamma_short_circuit_stub(src_point, des_point, intersection, gate): 
     """
         @ Brief:    Calculate the reflectance value at the equivalent_point and the point looking at the stub circuit
         @ Param:    
@@ -57,52 +58,116 @@ def caculate_Gamma_short_circuit_stub(Y_inter_value, Y_init_value, Gamma_eq_valu
     
     lamda = symbols('\u03BB')   
     if gate == 'input':
-        Y_inter, Y_stub_in, Y_init = symbols('Y{} Y{} Y{}'.format('a_', 'stub_', 's_'))
-        Z_inter, Z_stub_in = symbols('Z{}, Z{}'.format('a_', 'stub_'))
-        Gamma_inter, Gamma_stub_in = symbols('\u0393{} \u0393{}'.format('a', 'stub'))
-        l, d = symbols('l{} d{}'.format(get_sub('1'), get_sub('1')))
+        # Y_inter, Y_stub_in, Y_init = symbols('Y{} Y{} Y{}'.format('a_', 'stub_', 's_'))
+        # Z_inter, Z_stub_in = symbols('Z{}, Z{}'.format('a_', 'stub_'))
+        # Gamma_inter, Gamma_stub_in = symbols('\u0393{} \u0393{}'.format('a', 'stub'))
+        # l, d = symbols('l{} d{}'.format(get_sub('1'), get_sub('1')))
+        l_name = 'l1'
+        d_name = 'd1'
     elif gate == 'output':
-        Y_inter, Y_stub_in, Y_init = symbols('Y{} Y{} Y{}'.format('b_', 'stub_', 'L_'))
-        Z_inter, Z_stub_in = symbols('Z{}, Z{}'.format('b_', 'stub_'))
-        Gamma_inter, Gamma_stub_in = symbols('\u0393{} \u0393{}'.format('b', 'stub'))
-        l, d = symbols('l{} d{}'.format(get_sub('2'), get_sub('2')))
-    Y_stub_in_value = Y_inter_value - Y_init_value
-    print('With {} = {:.2f}, we have: \n'.format(Y_inter, Y_inter_value))
-    print('\t{} = {} - {} = {:.2f}'.format(Y_stub_in, Y_inter, Y_init, Y_stub_in_value))     
+        # Y_inter, Y_stub_in, Y_init = symbols('Y{} Y{} Y{}'.format('b_', 'stub_', 'L_'))
+        # Z_inter, Z_stub_in = symbols('Z{}, Z{}'.format('b_', 'stub_'))
+        # Gamma_inter, Gamma_stub_in = symbols('\u0393{} \u0393{}'.format('b', 'stub'))
+        # l, d = symbols('l{} d{}'.format(get_sub('2'), get_sub('2')))
+        l_name = 'l2'
+        d_name = 'd2'
+    
+    Y_inter_nv = intersection.get_admittance(Nomalize = True)    
+    Y_src_point_nv = src_point.get_admittance(Nomalize = True)  
+    Y_stub_in_nv = Y_inter_nv - Y_src_point_nv
+    stub_in_point = SP(name = '_stub',
+                       admittance = Y_stub_in_nv,
+                       Nomalize = True)
+    
+    print('With {normalized_admittance_intersection} = {normalized_admittance_intersection_value}, we have: \n'\
+        .format(normalized_admittance_intersection = intersection.get_admittance_symbol(Nomalize = True), 
+                normalized_admittance_intersection_value = intersection.get_admittance(Nomalize = True)))
+    print('\t{normalized_admittance_stub_in_point} = {normalized_admittance_intersection} - {normalized_admittance_src_point} = {normalized_admittance_stub_in_point_value}'\
+        .format(normalized_admittance_stub_in_point = stub_in_point.get_admittance_symbol(Nomalize = True), 
+                normalized_admittance_intersection = intersection.get_admittance_symbol(Nomalize = True), 
+                normalized_admittance_src_point = src_point.get_admittance_symbol(Nomalize = True), 
+                normalized_admittance_stub_in_point_value = stub_in_point.get_admittance(Nomalize = True)))     
     print('\n')
     
-    Z_stub_in_value = 1/Y_stub_in_value
-    print('\t{} = 1/{} = {:.2f}'.format(Z_stub_in, Y_stub_in, Z_stub_in_value))
+    # Z_stub_in_value = 1/Y_stub_in_nv
+    # print('\t{} = 1/{} = {:.2f}'.format(Z_stub_in, Y_stub_in, Z_stub_in_value))
     
-    Gamma_stub_in_ = Gamma_.subs([(Z0, 1), (Z, Z_stub_in)])
-    Gamma_stub_in_value = complex(Gamma_stub_in_.subs(Z_stub_in, Z_stub_in_value)) 
-    print('\t{} = {} = {:.2f}\N{angle}{:.2f}\N{DEGREE SIGN}'.format(Gamma_stub_in, Gamma_stub_in_, abs(Gamma_stub_in_value), phase(Gamma_stub_in_value)*180/np.pi))
+    # Gamma_stub_in_ = Gamma_.subs([(Z0, 1), (Z, Z_stub_in)])
+    # Gamma_stub_in_value = complex(Gamma_stub_in_.subs(Z_stub_in, Z_stub_in_value)) 
+    # print('\t{} = {} = {:.2f}\N{angle}{:.2f}\N{DEGREE SIGN}'.format(Gamma_stub_in, Gamma_stub_in_, abs(Gamma_stub_in_value), phase(Gamma_stub_in_value)*180/np.pi))
+    
+    print('{admittance_stub_in_point} = {admittance_stub_in_point_value}'\
+        .format(admittance_stub_in_point = stub_in_point.get_admittance_symbol(),
+                admittance_stub_in_point_value = stub_in_point.get_admittance()))
+    print('\n')
+    
+    print('{gamma_stub_in_point} = {gamma_stub_in_point_formula} = {gamma_stub_in_point_value}'\
+        .format(gamma_stub_in_point = stub_in_point.get_gamma_symbol(),
+                gamma_stub_in_point_formula = stub_in_point.get_gamma_formula(depend_on = 'admittance'),
+                gamma_stub_in_point_value = stub_in_point.get_gamma_polar()))
+    print('\n')
+    
+    shortcircuit_point = SP(name = '_short_circuit',
+                            impedance = 0)
+    
     print('\tDue to short circuit at the end of the stub, we have:')
-    print('\t\tGamma_short_circuit = {:.2f}\N{angle}{:.2f}\N{DEGREE SIGN}'.format(1,-180))
-    print('\n')
-        
-    l_length = get_wire_length(phase(Gamma_stub_in_value), np.pi)    
-    l_ = lamda * l_length
-    print('\t{} = {:.2f}*{}'.format(l, l_/lamda, lamda))
+    print('\t\{gamma_shortcircuit_point} = {gamma_shortcircuit_point_polar}'\
+        .format(gamma_shortcircuit_point = shortcircuit_point.get_gamma_symbol(),
+                gamma_shortcircuit_point_polar = shortcircuit_point.get_gamma_polar()))
     print('\n')
     
-    Z_inter_value = 1/Y_inter_value
-    print('\t{} = 1/{} = {:.2f}'.format(Z_inter, Y_inter, Z_inter_value))
+    l = SP(name = l_name,
+           lamda = lamda,
+           point_1 = shortcircuit_point,
+           point_2 = stub_in_point)
+    # l_length = get_wire_length(phase(Gamma_stub_in_value), np.pi)   
+    # l_length = get_wire_length(stub_in_point.get_gamma_phase(round_index = None), 
+    #                            shortcircuit_point.get_gamma_phase(round_index = None)) 
+    l_length = l.get_absolute_length()
+    # l_ = lamda * l_length
+    # print('\t{l_symbol} = {:.2f}*{}'.format(l, l_/lamda, lamda))
+    # print('\n')
+    print('{l} = {l_length}'\
+        .format(l = l.get_line_symbol(),
+                l_length = l_length))
+    
+    # Z_inter_value = 1/Y_inter_value
+    # print('\t{} = 1/{} = {:.2f}'.format(Z_inter, Y_inter, Z_inter_value))
+    # print('\n')
+    
+    print('{admittance_intersection} = {admittance_intersection_value}'\
+        .format(admittance_intersection = intersection.get_admittance_symbol(),
+                admittance_intersection_value = intersection.get_admittance()))
     print('\n')
     
-    Gamma_inter_ = Gamma_.subs([(Z0, 1), (Z, Z_inter)])
-    Gamma_inter_value = complex(Gamma_inter_.subs(Z_inter, Z_inter_value)) 
-    print('\t{} = {} = {:.2f}\N{angle}{:.2f}\N{DEGREE SIGN}'.format(Gamma_inter, Gamma_inter_, abs(Gamma_inter_value), phase(Gamma_inter_value)*180/np.pi))
+    # Gamma_inter_ = Gamma_.subs([(Z0, 1), (Z, Z_inter)])
+    # Gamma_inter_value = complex(Gamma_inter_.subs(Z_inter, Z_inter_value)) 
+    # print('\t{} = {} = {:.2f}\N{angle}{:.2f}\N{DEGREE SIGN}'.format(Gamma_inter, Gamma_inter_, abs(Gamma_inter_value), phase(Gamma_inter_value)*180/np.pi))
+    # print('\n')
+    
+    print('{gamma_intersection} = {gamma_intersection_formula} = {gamma_intersection_polar}'\
+        .format(gamma_intersection = intersection.get_gamma_symbol(),
+                gamma_intersection_formula = intersection.get_gamma_formula(depend_on = 'admittance'),
+                gamma_intersection_polar = intersection.get_gamma_polar()))
     print('\n')
+    
+    d = SP(name = d_name,
+           lamda = lamda,
+           point_1 = intersection,
+           point_2 = des_point)
+    
+    # d_length = get_wire_length(phase(Gamma_eq_value), phase(Gamma_inter_value))
+    # d_ = lamda * d_length
+    # print('\t{} = {:.2f}*{}'.format(d, d_/lamda, lamda))
+    # print('\n')
+    d_length = d.get_absolute_length()
+    print('{d} = {d_length}'\
+        .format(d = d.get_line_symbol(),
+                d_length = d_length))
 
-    d_length = get_wire_length(phase(Gamma_eq_value), phase(Gamma_inter_value))
-    d_ = lamda * d_length
-    print('\t{} = {:.2f}*{}'.format(d, d_/lamda, lamda))
-    print('\n')
-
-    return Gamma_inter_value, Gamma_stub_in_value
+    return stub_in_point
     
-def plot_smith_chart(Y_inter_value, Y_init_value, Gamma_final_value, Gamma_init_value ,gate):
+def plot_smith_chart(src_point, des_point, intersection, gate):
     """
         @ BriefL:   Draw the Smith graph from known parameters
         @ Param:    
@@ -112,21 +177,30 @@ def plot_smith_chart(Y_inter_value, Y_init_value, Gamma_final_value, Gamma_init_
                     Gamma_init_value: reflectance at the initial point
                     gate: The gate of the scattering matrix
     """
+    
     if gate == 'input':
         Y_inter, Y_stub_in, Y_init, Y_result = symbols('Y{} Y{} Y{} Y{}'.format('a', get_sub('stub'), get_sub('s'), get_sub('s_max')))
         Z_inter, Z_stub_in, Z_init, Z_result = symbols('Z{}, Z{} Z{} Z{}'.format('a', get_sub('stub'), get_sub('s'), get_sub('s_max')))
     elif gate == 'output':
         Y_inter, Y_stub_in, Y_init, Y_result = symbols('Y{} Y{} Y{} Y{}'.format('b', get_sub('stub'), get_sub('L'), get_sub('L_max')))
         Z_inter, Z_stub_in, Z_init, Z_result = symbols('Z{}, Z{} Z{} Z{}'.format('b', get_sub('stub'), get_sub('L'), get_sub('L_max')))
-    fig, axes = plt.subplots(2, len(Y_inter_value), subplot_kw={'projection': 'polar'})
-    for index, Y_inter_val in enumerate(Y_inter_value):
+    fig, axes = plt.subplots(2, len(intersection), subplot_kw={'projection': 'polar'})
+    
+    for point in intersection:
+        normalized_admittance_intersection = point.get_admittance(Nomalize = True)
+        try:
+            Y_inter_value = np.append(Y_inter_value, normalized_admittance_intersection)
+        except NameError:
+            Y_inter_value = np.array([normalized_admittance_intersection])
+            
+    for index, point in enumerate(intersection):
         try:
             ax1 = axes[0][index]
             ax2 = axes[1][index]
         except TypeError:
             ax1 = axes[0]
             ax2 = axes[1]
-        Gamma_inter_val, Gamma_stub_in_val = caculate_Gamma_short_circuit_stub(Y_inter_val, Y_init_value, Gamma_final_value, gate)
+        stub_in_point = caculate_Gamma_short_circuit_stub(point, src_point, des_point, gate)
         p1 = ax1.scatter(phase(Gamma_final_value), abs(Gamma_final_value), marker='o', s=100, color = 'r', alpha = 1, label = Z_result)
         p2 = ax1.scatter(phase(Gamma_final_value) + np.pi, abs(Gamma_final_value), marker='x', linewidths = 3, color = 'r', alpha = 1, label = Y_result)
         p3 = ax1.scatter(phase(Gamma_init_value), abs(Gamma_init_value), marker='o', s=100, color = 'b', alpha = 1, label = Z_init)
@@ -174,7 +248,7 @@ def get_sub(x):
     res = x.maketrans(''.join(normal), ''.join(sub_s))
     return x.translate(res)    
 
-def myfunction(src_point, gate_point, line_impedance, gate):
+def myfunction(start_point, gate_point, line_impedance, gate):
     """
         @brief      Caculate and display result for impedance matching problem
         @param      Zw_value          wire impedance
@@ -194,87 +268,63 @@ def myfunction(src_point, gate_point, line_impedance, gate):
     """
     
     if gate == 'input':
-        # Gamma_L, Gamma_eq, Gamma_g = symbols('\u0393s \u0393s_max \u0393in')  
-        # Zeq, Zeq_norm, ZL, ZL_norm = symbols('Zs_max Zs_max_ Zs Zs_')
-        # YL_norm = symbols('Ys_')
-        # Yit_norm = symbols('Ya_')
         equivalent_point_name = 's_max'
         intersection_name = 'a'
     elif gate == 'output':
-        # Gamma_L, Gamma_eq, Gamma_g = symbols('\u0393L \u0393L_max \u0393out')  
-        # Zeq, Zeq_norm, ZL, ZL_norm = symbols('ZL_max ZL_max_ ZL ZL_')
-        # YL_norm = symbols('YL_')
-        # Yit_norm = symbols('Yb_')
         equivalent_point_name = 'L_max'
         intersection_name = 'b'
-    
-    # Gamma_L_value = Gamma_.subs([(Z0, Zw_value), (Z, ZL_value)])
-    Gamma_L_value = src_point.get_gamma()
-    # try:
-    #     print('{} = {:.2f}\N{angle}{:.2f}\N{DEGREE SIGN}'.format(Gamma_L, abs(Gamma_L_value), phase(Gamma_L_value)*180/np.pi))
-    # except TypeError:
-    #     print('{} = 0'.format(Gamma_L))
-    print('{gamma_src_point} = {gamma_src_point_value}'\
-        .format(gamma_src_point = src_point.get_gamma_symbol(),
-                gamma_src_point_value = src_point.get_gamma_polar()))                                       
+
+    print('{gamma_start_point} = {gamma_start_point_value}'\
+        .format(gamma_start_point = start_point.get_gamma_symbol(),
+                gamma_start_point_value = start_point.get_gamma_polar()))                                       
     print('\n')
+    
     print('For maximum power gain:')
     Gamma_eq_value = gate_point.get_gamma().conjugate()
     equivalent_point = SP(name = equivalent_point_name, 
                       gamma = Gamma_eq_value, 
                       line_impedance = line_impedance)
-    # print('\t{} = {}* = {:.2f}\N{angle}{:.2f}\N{DEGREE SIGN}'.format(Gamma_eq, Gamma_g , abs(Gamma_eq_value), phase(Gamma_eq_value)*180/np.pi))
+
     print('{gamma_equivalent_point} = {gamma_gate_point}* = {gamma_equivalent_point_value}'\
         .format(gamma_equivalent_point = equivalent_point.get_gamma_symbol(),
                 gamma_gate_point = gate_point.get_gamma_symbol(),
                 gamma_equivalent_point_value = equivalent_point.get_gamma_polar()))                                                                                          
     print('\n')
-    # Zeq_ = Z_.subs(Gamma, Gamma_eq)
+
     print('{impedance_equivalent_point} = {impedance_equivalent_point_formula} = {impedance_equivalent_point_value}'\
         .format(impedance_equivalent_point = equivalent_point.get_impedance_symbol(), 
                 impedance_equivalent_point_formula = equivalent_point.get_impedance_formula(),
                 impedance_equivalent_point_value = equivalent_point.get_impedance()))                                                                             
     print('\n')
-    # Zeq_norm_ = Zeq_/Z0
-    # ZL_eq_value = complex(Zeq_norm_.subs(Gamma_eq, Gamma_eq_value)) # giá trị ZL chuẩn hóa
-    # print('{} = {}/{} = {} = {:.2f}'.format(Zeq_norm, Zeq, Z0, Zeq_norm_, ZL_eq_value))
+
     print('{normalized_impedance_equivalent_point} = {normalized_impedance_equivalent_point_value}'\
         .format(normalized_impedance_equivalent_point = equivalent_point.get_impedance_symbol(Nomalize = True),
                 normalized_impedance_equivalent_point_value = equivalent_point.get_impedance(Nomalize = True)))
     print('\n')
     
-    print('{normalized_admittance_src_point} = {normalized_admittance_src_point_value}'\
-        .format(normalized_admittance_src_point = src_point.get_impedance_symbol(Nomalize = True),
-                normalized_admittance_src_point_value = src_point.get_admittance(Nomalize = True)))
-    # YL_eq_value = 1/ZL_eq_value
-    # print('{} = 1/{} = {:.2f}'.format(YL_norm, Zeq_norm, YL_eq_value))
-    print('{normalized_admittance_src_point} = {normalized_admittance_src_point_value}'\
-        .format(normalized_admittance_src_point = src_point.get_admittance_symbol(Nomalize = True),
-                normalized_admittance_src_point_value = src_point.get_admittance(Nomalize = True)))
+    print('{normalized_admittance_start_point} = {normalized_admittance_start_point_value}'\
+        .format(normalized_admittance_start_point = start_point.get_impedance_symbol(Nomalize = True),
+                normalized_admittance_start_point_value = start_point.get_admittance(Nomalize = True)))
+
+    print('{normalized_admittance_start_point} = {normalized_admittance_start_point_value}'\
+        .format(normalized_admittance_start_point = start_point.get_admittance_symbol(Nomalize = True),
+                normalized_admittance_start_point_value = start_point.get_admittance(Nomalize = True)))
     print('\n')
-    # ZL_norm_value = ZL_value/Zw_value
-    # print('{} = {}/{} = {:.2f}'.format(ZL_norm, ZL, Z0, ZL_norm_value))
-    # print('\n')
-    YL_norm_value = src_point.get_admittance(Nomalize = True)
-    # print('{} = 1/{} = {:.2f}'.format(YL_norm, ZL_norm, YL_norm_value))
-    # print('\n')
-    # Module value of reflectance looking at starting point of the line
+
     Gamma_eq_mv = equivalent_point.get_gamma_module()     
-    # print('{} = {:.2f}'.format(module_Gamma_S_max, Gamma_eq_mv))
-    # print('\n')
+
     print('{module_gamma_equivalent_point} = {module_gamma_equivalent_point_value}'\
         .format(module_gamma_equivalent_point = equivalent_point.get_module_gamma_symbol(),
                 module_gamma_equivalent_point_value = equivalent_point.get_gamma_module()))
     print('\n')
-    # Locus equation of reflectance's module isometric line
+
     gm_isometric_equation = get_gm_isometric_equation(Gamma_eq_mv)
     # Real value of load admittance normalized to Z0
-    YL_norm_rv = src_point.get_admittance(Nomalize = True).real
+    YL_norm_rv = start_point.get_admittance(Nomalize = True).real
     # Image value of load admittance normalized to Z0
     Yit_norm_iv = find_cmg_cri_intersection(gm_isometric_equation, YL_norm_rv)
     
     print('Look up Smith chart, we have:')
-    # print('{} = '.format(Yit_norm), Yit_norm_value)
     print('\n')
     
     for imag_value in Yit_norm_iv:
@@ -293,38 +343,40 @@ def myfunction(src_point, gate_point, line_impedance, gate):
             print('\t{normalized_admittance_intersection} = {normalized_admittance_intersection_value}'\
                 .format(normalized_admittance_intersection = intersection_i.get_admittance_symbol(Nomalize = True),
                         normalized_admittance_intersection_value = intersection_i.get_admittance(Nomalize = True)))
-        try:
-            Yit_norm_value = np.append(Yit_norm_value, value)
-        except NameError:
-            Yit_norm_value = np.array([value])
     print('\n')
-    plot_smith_chart(Yit_norm_value, YL_norm_value, Gamma_eq_value, Gamma_L_value, gate)
+    
+    for point in intersection:
+        stub_in_point_i = caculate_Gamma_short_circuit_stub(start_point, equivalent_point, point, gate)
+    # plot_smith_chart(Yit_norm_value, YL_norm_value, Gamma_eq_value, Gamma_L_value, gate)
+    # plot_smith_chart(start_point, equivalent_point, intersection, gate)
+    stub_in_point = caculate_Gamma_short_circuit_stub(start_point, equivalent_point, intersection, gate)
+    plot_smith_chart(start_point, equivalent_point, intersection, gate)
 
-def get_wire_length(src_phase, des_phase):
-    """
-        @ Brief:    Calculate the wire length needs to be added toward the source to get phase shift form 
-                    src_phase to des_phase (phase of the reflectance)
-        @ Param:    
-                    src_phase: Initial phase
-                    des-phase: Destination phase
-        @ Retval:   The additional wire length needed
-    """
-    while src_phase > 2*np.pi:
-        src_phase -= 2*np.pi
-    while src_phase < 0:
-        src_phase += 2*np.pi
-    while des_phase > 2*np.pi:
-        des_phase -= 2*np.pi
-    while des_phase < 0:
-        des_phase += 2*np.pi
-    if src_phase < des_phase:
-        pass
-    elif src_phase > des_phase:
-        des_phase += 2*np.pi
-    else:
-        print("Source's phase equals destination's phase")
-    length = (des_phase - src_phase) * 0.5/(2*np.pi)
-    return length
+# def get_wire_length(src_phase, des_phase):
+#     """
+#         @ Brief:    Calculate the wire length needs to be added toward the source to get phase shift form 
+#                     src_phase to des_phase (phase of the reflectance)
+#         @ Param:    
+#                     src_phase: Initial phase
+#                     des-phase: Destination phase
+#         @ Retval:   The additional wire length needed
+#     """
+#     while src_phase > 2*np.pi:
+#         src_phase -= 2*np.pi
+#     while src_phase < 0:
+#         src_phase += 2*np.pi
+#     while des_phase > 2*np.pi:
+#         des_phase -= 2*np.pi
+#     while des_phase < 0:
+#         des_phase += 2*np.pi
+#     if src_phase < des_phase:
+#         pass
+#     elif src_phase > des_phase:
+#         des_phase += 2*np.pi
+#     else:
+#         print("Source's phase equals destination's phase")
+#     length = (des_phase - src_phase) * 0.5/(2*np.pi)
+#     return length
 
 if __name__ == '__main__': 
     main()
