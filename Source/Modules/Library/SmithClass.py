@@ -4,13 +4,6 @@ from cmath import *
 
 
 class SmithPoint:
-    # Class này chứa tất cả dữ liệu của một điểm trên mạch siêu cao tần
-    # Khởi tạo bằng cách đưa vào name và một giá trị bất kỳ, có thể là trở kháng
-    # hoặc dẫn kháng (admittance) chuẩn hóa hoặc tuyệt đối, hoặc giá trị của hệ số phản xạ
-    # class này cung cấp tất cả thông tin về các thông số liên quan tới điểm đó bao gồm
-    # ký hiệu, công thức và giá trị của các thông số liên quan tới điểm đó như, trở kháng,
-    # dẫn kháng, hệ số phản xạ, góc pha, module của hệ số phản xạ
-    
     """
             This Class contains all the data of a point on the super high frequency circuit
         Initialize by passing in a name and a random value, such as impedance or conductive resistance 
@@ -94,10 +87,6 @@ class SmithPoint:
                 raise Exception("Sorry, reflection coefficient value and admittance value are not related to each other")
             
     def get_impedance(self, Nomalize = False, round_index = 2): 
-        # Lấy giá trị trở kháng tại điểm đang xét
-        # Nomalize: giá trị trả về có chuẩn hóa hay k (True: có, False: không)
-        # round_index: chỉ số của số làm tròn đến sau dấu . thập phân
-        # ret: giá trị của trở kháng 
         """
             @ Brief:    Get the impedance's value at the current considered point
             @ Param:    
@@ -116,10 +105,6 @@ class SmithPoint:
             return np.round(result, round_index)
         
     def get_admittance(self, Nomalize = False, round_index = 2): 
-        # Lấy giá trị dẫn kháng tại điểm đang xét
-        # Nomalize: giá trị trả về có chuẩn hóa hay k (True: có, False: không)
-        # round_index: chỉ số của số làm tròn đến sau dấu . thập phân
-        # ret: giá trị của dẫn kháng 
         """
             @ Brief:    Get the conductive resistance's value at the current considered point
             @ Param:    
@@ -138,9 +123,6 @@ class SmithPoint:
             return np.round(result, round_index)
         
     def get_gamma(self, round_index = 2):
-        # Lấy giá trị hệ số phản xạ tại điểm đang xét
-        # round_index: chỉ số của số làm tròn đến sau dấu . thập phân
-        # ret: giá trị của hệ số phản xạ 
         """
             @ Brief:    Get the reflectance's value at the current considered point
             @ Param:    
@@ -158,9 +140,6 @@ class SmithPoint:
 
     
     def get_gamma_module(self, round_index = 2):
-        # Lấy giá trị magnitude hệ số phản xạ tại điểm đang xét
-        # round_index: chỉ số của số làm tròn đến sau dấu . thập phân
-        # ret: giá trị magnitude của hệ số phản xạ 
         """
             @ Brief:    Get the reflectance's magnitude at the current considered point
             @ Param:    
@@ -174,10 +153,7 @@ class SmithPoint:
             return round(result, round_index)
         
     def get_gamma_phase(self, round_index = 2, unit = 'radian'):
-        # Lấy giá trị phase hệ số phản xạ tại điểm đang xét
-        # round_index: chỉ số của số làm tròn đến sau dấu . thập phân
-        # ret: giá trị phase của hệ số phản xạ 
-         """
+        """
             @ Brief:    Get the reflectance's phase value at the current considered point
             @ Param:    
                         round_index: Index of the number rounded up to after the "." decimal 
@@ -196,15 +172,13 @@ class SmithPoint:
             return round(result, round_index)
         
     def get_gamma_polar(self, round_index = 2, unit = 'dergee'):
-        # Lấy giá trị string hệ số phản xạ tại điểm đang xét
-        # round_index: chỉ số của số làm tròn đến sau dấu . thập phân
-        # ret: string giá trị của hệ số phản xạ dưới dạng cực (polar)
-         """
+        """
             @ Brief:    Get the reflectance's string value at the current considered point
             @ Param:    
                         round_index: Index of the number rounded up to after the "." decimal 
             @ Retval:   The string value of the reflectance in polar form
         """
+
         if self.Gamma_val == 0:
             result = '0'
         else:
@@ -221,43 +195,54 @@ class SmithPoint:
         return result
     
     def get_impedance_symbol(self, Nomalize = False):
-        # Lấy ký hiệu của trở kháng tại điểm đang xét
-        # Nomalize: ký hiệu trả về có chuẩn hóa hay k (True: có, False: không)
-        # ret: ký hiệu của trở kháng
-        
+        """
+            @ Brief:    Get the impedance's symbol at the current considered point
+            @ Param:    
+                        Nomalize:   Determine whether the retval is standardized or not 
+                        (True: Yes, False: No)
+            @ Retval:   The symbol of the impedance
+        """
         if Nomalize:
             return self.z
         else:
             return self.Z
         
     def get_admittance_symbol(self, Nomalize = False):
-        # Lấy ký hiệu của dẫn kháng tại điểm đang xét
-        # Nomalize: ký hiệu trả về có chuẩn hóa hay k (True: có, False: không)
-        # ret: ký hiệu của dẫn kháng
-        
+        """
+            @ Brief:    Get the conductive resistance's symbol at the current considered point
+            @ Param:    
+                        Nomalize:   Determine whether the retval is standardized or not 
+                        (True: Yes, False: No)
+            @ Retval:   The symbol of the conductive resistance
+        """
         if Nomalize:
             return self.y
         else:
             return self.Y
         
     def get_gamma_symbol(self):
-        # Lấy ký hiệu của hệ số phản xạ tại điểm đang xét
-        # ret: ký hiệu của hệ số phản xạ
-        
+        """
+            @ Brief:    Get the reflectance's symbol at the current considered point
+            @ Retval:   The symbol of the reflectance
+        """
         return self.Gamma
     
     def get_module_gamma_symbol(self):
-        # Lấy ký hiệu của magnitude hệ số phản xạ tại điểm đang xét
-        # ret: ký hiệu của magnitude hệ số phản xạ
-        
+        """
+            @ Brief:    Get the magnitude of the reflectance's symbol at the current considered point
+            @ Retval:   The magnitude of the reflectance's symbol
+        """
         return Symbol('|' + str(self.Gamma) + '|')
     
     def get_impedance_formula(self, depend_on = 'gamma'):
-        # Lấy công thức của trở kháng 
-        # depend_on: công thức của trở kháng tính theo
-        #   'gamma': tính theo hệ số phản xạ
-        #   'admittance': tính theo dẫn kháng
-        
+        """
+            @ Brief:    Get the formula of the impedance
+            @ Param:    
+                        depend_on: The formula of the impedance
+                            'gamma': over the reflectance
+                            'admittance': over the admittance
+            @ Retval:   The formula of the impedance
+        """
         if depend_on == 'gamma':
             return self.Z_g
         elif depend_on == 'admittance':
@@ -266,11 +251,14 @@ class SmithPoint:
             raise Exception("Unknown parameter: '{}'".format(depend_on))
 
     def get_admittance_formula(self, depend_on = 'impedance'):
-        # Lấy công thức của dẫn kháng 
-        # depend_on: công thức của dẫn kháng tính theo
-        #   'gamma': tính theo hệ số phản xạ
-        #   'impedance': tính theo trở kháng
-        
+        """
+            @ Brief:    Get the formula of the admittance
+            @ Param:    
+                        depend_on: The formula of the admittance
+                            'gamma': over the reflectance
+                            'impedance': over the impedance
+            @ Retval:   The formula of the admittance
+        """
         if depend_on == 'gamma':
             return self.Y_g
         elif depend_on == 'impedance':
@@ -279,11 +267,14 @@ class SmithPoint:
             raise Exception("Unknown parameter: '{}'".format(depend_on))
             
     def get_gamma_formula(self, depend_on = 'impedance'):
-        # Lấy công thức của hệ số phản xạ
-        # depend_on: công thức của hệ số phản xạ tính theo
-        #   'admittance': tính theo dẫn kháng
-        #   'impedance': tính theo trở kháng
-        
+        """
+            @ Brief:    Get the formula of the reflectance
+            @ Param:    
+                        depend_on: The formula of the reflectance
+                            'admittance': over the admittance
+                            'impedance': over the impedance
+            @ Retval:   The formula of the reflectance
+        """
         if depend_on == 'impedance':
             return self.Gamma_z
         elif depend_on == 'admittance':
@@ -293,12 +284,13 @@ class SmithPoint:
 
 
 class SmithLine:
-    # Class này chứa tất cả thông tin của đoạn dây cần xét
-    # Khởi tạo bằng cách truyền tham số name (tên của đoạn dây),
-    # tham số point_1 (điểm đầu mút thứ nhất), point_2 (điểm đầu mút
-    # thứ 2)
-    # Lưu ý: point_1 và point_2 bắt buộc phải là object của SmithPoint class
-    # Class này có thể trả về giá trị chiều dài của đoạn dây đang xét
+    """
+            This class contains all the info of the considered wire
+        Initialize by passing the parameter: name (name of the wire), point_1 (the starting point), 
+        point_2 (The end point)
+            Note: point_1 and point_2 must be the objects of the SmithPoint class
+            This class can return the length of the considered wire    
+    """
     
     def __init__(self, name, lamda, point_1 = None, point_2 = None):
         if isinstance(point_1, SmithPoint):
@@ -313,12 +305,14 @@ class SmithLine:
         self.lamda = Symbol(lamda)
     
     def get_scaled_length(self, direct = 0):
-        # Lấy giá trị tuyệt đối của đoạn dây tính theo bước sóng
-        # direct: xác định hướng tăng hoặc giảm chiều dài
-        #   direct == 0: dịch chuyển theo hướng giảm chiều dài
-        #   direct == 1: dịch chuyển theo hướng tăng chiều dài
-        # ret: giá trị tuyệt đối của đoạn dây tính theo bước sóng
-        
+        """
+            @ Brief:    Get the absolute value of the wire over the wave length
+            @ Param:    
+                        direct: determine the direction of lengthen or shorten
+                        direct == 0: shorten
+                        direct == 0: lengthen
+            @ Retval:   The absolute value of the wire over the wave length
+        """
         phase_point_1 = self.point_1.get_gamma_phase(round_index = None)
         phase_point_2 = self.point_2.get_gamma_phase(round_index = None)
         if direct == 0:
@@ -357,12 +351,14 @@ class SmithLine:
         return length
     
     def get_absolute_length(self, direct = 0, round_index = 2):
-        # Lấy giá trị tuyệt đối của đoạn dây tính theo bước sóng
-        # direct: xác định hướng tăng hoặc giảm chiều dài
-        #   direct == 0: dịch chuyển theo hướng giảm chiều dài
-        #   direct == 1: dịch chuyển theo hướng tăng chiều dài
-        # ret: giá trị tuyệt đối của đoạn dây tính theo bước sóng
-        
+        """
+            @ Brief:    Get the absolute value of the wire over the wave length
+            @ Param:    
+                        direct: determine the direction of lengthen or shorten
+                        direct == 0: shorten
+                        direct == 0: lengthen
+            @ Retval:   The absolute value of the wire over the wave length
+        """
         scaled_length = self.get_scaled_length(direct = direct)
         if round_index is None:
             absolute_length = scaled_length * self.lamda
@@ -371,6 +367,8 @@ class SmithLine:
         return absolute_length
     
     def get_line_symbol(self):
-        # Lấy ký hiệu của đoạn dây
-        # ret: ký hiệu của đoạn dây
+        """
+            @ Brief: Get the symbol of the wire
+            @ Retval: The symbol of the wire
+        """
         return self.line
