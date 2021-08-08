@@ -298,6 +298,7 @@ class SmithLine:
     # tham số point_1 (điểm đầu mút thứ nhất), point_2 (điểm đầu mút
     # thứ 2)
     # Lưu ý: point_1 và point_2 bắt buộc phải là object của SmithPoint class
+    # Class này có thể trả về giá trị chiều dài của đoạn dây đang xét
     
     def __init__(self, name, lamda, point_1 = None, point_2 = None):
         if isinstance(point_1, SmithPoint):
@@ -311,13 +312,18 @@ class SmithLine:
         self.line = Symbol(name)
         self.lamda = Symbol(lamda)
     
-    def get_scaled_length(self, src_point = 1):
-        # Lấy giá trị tỷ lệ của đoạn dây
+    def get_scaled_length(self, direct = 0):
+        # Lấy giá trị tuyệt đối của đoạn dây tính theo bước sóng
+        # direct: xác định hướng tăng hoặc giảm chiều dài
+        #   direct == 0: dịch chuyển theo hướng giảm chiều dài
+        #   direct == 1: dịch chuyển theo hướng tăng chiều dài
+        # ret: giá trị tuyệt đối của đoạn dây tính theo bước sóng
+        
         phase_point_1 = self.point_1.get_gamma_phase(round_index = None)
         phase_point_2 = self.point_2.get_gamma_phase(round_index = None)
-        if src_point == 1:
+        if direct == 0:
             scaled_length = self.get_wire_length(phase_point_1, phase_point_2)
-        elif src_point == 2:
+        elif direct == 1:
             scaled_length = self.get_wire_length(phase_point_2, phase_point_1)
         else:
             raise Exception("Invalid parameter for src_point. Value must be 1 or 2.")
@@ -350,8 +356,14 @@ class SmithLine:
         length = (des_phase - src_phase) * 0.5/(2*np.pi)
         return length
     
-    def get_absolute_length(self, src_point = 1, round_index = 2):
-        scaled_length = self.get_scaled_length(src_point = src_point)
+    def get_absolute_length(self, direct = 0, round_index = 2):
+        # Lấy giá trị tuyệt đối của đoạn dây tính theo bước sóng
+        # direct: xác định hướng tăng hoặc giảm chiều dài
+        #   direct == 0: dịch chuyển theo hướng giảm chiều dài
+        #   direct == 1: dịch chuyển theo hướng tăng chiều dài
+        # ret: giá trị tuyệt đối của đoạn dây tính theo bước sóng
+        
+        scaled_length = self.get_scaled_length(direct = direct)
         if round_index is None:
             absolute_length = scaled_length * self.lamda
         else:
@@ -359,4 +371,6 @@ class SmithLine:
         return absolute_length
     
     def get_line_symbol(self):
+        # Lấy ký hiệu của đoạn dây
+        # ret: ký hiệu của đoạn dây
         return self.line
