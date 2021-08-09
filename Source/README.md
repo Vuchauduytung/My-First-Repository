@@ -1,14 +1,13 @@
---------------------------- Project môn học Kỹ thuật siêu cao tần -----------------------------------
+--------------------------- Ultra high frequency techniques Project -----------------------------------
 
-1. Mục đích của project:
-    - Tính toán chiều dài của đường dây trên nhánh chính và stub để đạt được công suất cực đại
+1. Goal of the project: 
+    - Calculate the length of the wire on the main branch and stub to obtain maximum power
 
-2. Hướng dẫn sử dụng:
-    - Cài đặt tất cả framework cần thiết trong file Software_Requirements.md
-    - Vào đường dẫn của file này và nhập:
+2. How to use:
+    - Install all necessary frameworks in Software_Requirements.md file
+    - Go to the directory of this file and type:
         >> python ImpedanceMatching_caculate.py <solution-filename> <show-solution>
-        Note: <solution-filename>: tên của file solution chứa quá trình giải tích đường dây
-                <show-solution>: "show_solution" nếu muốn hiển thị kết quả ra màn hình
-                                hoặc để trống nếu không hiển thị kết quả
-    - Solution file sẽ được lưu trong thư mục Solution
-
+        Note: <solution-filename>: Name of the solution file that contains the process of wire analysis
+                <show-solution>: "show_solution" if you want to display the result on the screen or leave it blank 
+                                    if you don't
+    - Solution file will be saved in the Solution folder

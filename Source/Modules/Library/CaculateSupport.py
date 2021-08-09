@@ -22,7 +22,18 @@ def caculate_line_length_at_mainbranch_and_stub_to_get_maxpower(start_point, gat
     # end_stub_point: điểm cuối cùng của stub
     # gate: "'input' hoặc 'output'"
     # ret: chiều dài đường dây bù thêm trên nhánh chính và stub
-    
+    """
+        @ Brief:    Calculate the length of the stub and the main branch wire to obtain maximum power
+                    This function applies for 1 gate only
+        @ Param: 
+                    start_point: Starting point
+                    gate_point: Entry point of the scattering matrix
+                    equivalent_point_name: Equivalence point in impedance matching
+                    line_impedance: Impedance of the wire
+                    end_stub_point: Last point of stub
+                    gate: "'input' or 'output'"
+        @ Retval: Length of the wire added on the main branch and stub
+    """
     global solution
     
     solution += '{gamma_start_point} = {gamma_start_point_value}'\
