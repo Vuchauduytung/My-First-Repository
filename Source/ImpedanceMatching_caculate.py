@@ -31,10 +31,18 @@ def main():
     ZL_value = complex(input('\t{} = '.format('ZL')))
     Z0_value = complex(input('\t{} = '.format('Z0')))
     print('\n')
-    point_A = SP(name = 's', impedance = Zs_value, line_impedance = Z0_value)
-    point_B = SP(name = 'L', impedance = ZL_value, line_impedance = Z0_value)
-    point_C = SP(name = 'in', gamma = Gamma_in_value, line_impedance = Z0_value)
-    point_D = SP(name = 'out', gamma = Gamma_out_value, line_impedance = Z0_value)
+    point_A = SP(name = 's', 
+                 impedance = Zs_value, 
+                 line_impedance = Z0_value)
+    point_B = SP(name = 'L', 
+                 impedance = ZL_value, 
+                 line_impedance = Z0_value)
+    point_C = SP(name = 'in', 
+                 gamma = Gamma_in_value, 
+                 line_impedance = Z0_value)
+    point_D = SP(name = 'out', 
+                 gamma = Gamma_out_value, 
+                 line_impedance = Z0_value)
     
     # At the begin of the line
     myfunction(point_A, point_C, Z0_value, 'input')
@@ -43,7 +51,7 @@ def main():
     
     input("Press Enter to stop this script >>")
     
-def caculate_Gamma_short_circuit_stub(src_point, des_point, intersection, gate): 
+def caculate_Gamma_short_circuit_stub(src_point, des_point, intersection, shortcircuit_point, line_impedance, gate): 
     """
         @ Brief:    Calculate the reflectance value at the equivalent_point and the point looking at the stub circuit
         @ Param:    
@@ -56,7 +64,7 @@ def caculate_Gamma_short_circuit_stub(src_point, des_point, intersection, gate):
                     Gamma_stub_in_value: reflectance looking at the circuit
     """
     
-    lamda = symbols('\u03BB')   
+    lamda = '\u03BB'   
     if gate == 'input':
         # Y_inter, Y_stub_in, Y_init = symbols('Y{} Y{} Y{}'.format('a_', 'stub_', 's_'))
         # Z_inter, Z_stub_in = symbols('Z{}, Z{}'.format('a_', 'stub_'))
@@ -77,6 +85,7 @@ def caculate_Gamma_short_circuit_stub(src_point, des_point, intersection, gate):
     Y_stub_in_nv = Y_inter_nv - Y_src_point_nv
     stub_in_point = SP(name = '_stub',
                        admittance = Y_stub_in_nv,
+                       line_impedance = line_impedance,
                        Nomalize = True)
     
     print('With {normalized_admittance_intersection} = {normalized_admittance_intersection_value}, we have: \n'\
@@ -96,27 +105,24 @@ def caculate_Gamma_short_circuit_stub(src_point, des_point, intersection, gate):
     # Gamma_stub_in_value = complex(Gamma_stub_in_.subs(Z_stub_in, Z_stub_in_value)) 
     # print('\t{} = {} = {:.2f}\N{angle}{:.2f}\N{DEGREE SIGN}'.format(Gamma_stub_in, Gamma_stub_in_, abs(Gamma_stub_in_value), phase(Gamma_stub_in_value)*180/np.pi))
     
-    print('{admittance_stub_in_point} = {admittance_stub_in_point_value}'\
+    print('\t{admittance_stub_in_point} = {admittance_stub_in_point_value}'\
         .format(admittance_stub_in_point = stub_in_point.get_admittance_symbol(),
                 admittance_stub_in_point_value = stub_in_point.get_admittance()))
     print('\n')
     
-    print('{gamma_stub_in_point} = {gamma_stub_in_point_formula} = {gamma_stub_in_point_value}'\
+    print('\t{gamma_stub_in_point} = {gamma_stub_in_point_formula} = {gamma_stub_in_point_value}'\
         .format(gamma_stub_in_point = stub_in_point.get_gamma_symbol(),
                 gamma_stub_in_point_formula = stub_in_point.get_gamma_formula(depend_on = 'admittance'),
                 gamma_stub_in_point_value = stub_in_point.get_gamma_polar()))
     print('\n')
     
-    shortcircuit_point = SP(name = '_short_circuit',
-                            impedance = 0)
-    
     print('\tDue to short circuit at the end of the stub, we have:')
-    print('\t\{gamma_shortcircuit_point} = {gamma_shortcircuit_point_polar}'\
+    print('\t\t{gamma_shortcircuit_point} = {gamma_shortcircuit_point_polar}'\
         .format(gamma_shortcircuit_point = shortcircuit_point.get_gamma_symbol(),
                 gamma_shortcircuit_point_polar = shortcircuit_point.get_gamma_polar()))
     print('\n')
     
-    l = SP(name = l_name,
+    l = SL(name = l_name,
            lamda = lamda,
            point_1 = shortcircuit_point,
            point_2 = stub_in_point)
@@ -127,15 +133,16 @@ def caculate_Gamma_short_circuit_stub(src_point, des_point, intersection, gate):
     # l_ = lamda * l_length
     # print('\t{l_symbol} = {:.2f}*{}'.format(l, l_/lamda, lamda))
     # print('\n')
-    print('{l} = {l_length}'\
+    print('\t{l} = {l_length}'\
         .format(l = l.get_line_symbol(),
                 l_length = l_length))
+    print('\n')
     
     # Z_inter_value = 1/Y_inter_value
     # print('\t{} = 1/{} = {:.2f}'.format(Z_inter, Y_inter, Z_inter_value))
     # print('\n')
     
-    print('{admittance_intersection} = {admittance_intersection_value}'\
+    print('\t{admittance_intersection} = {admittance_intersection_value}'\
         .format(admittance_intersection = intersection.get_admittance_symbol(),
                 admittance_intersection_value = intersection.get_admittance()))
     print('\n')
@@ -145,29 +152,30 @@ def caculate_Gamma_short_circuit_stub(src_point, des_point, intersection, gate):
     # print('\t{} = {} = {:.2f}\N{angle}{:.2f}\N{DEGREE SIGN}'.format(Gamma_inter, Gamma_inter_, abs(Gamma_inter_value), phase(Gamma_inter_value)*180/np.pi))
     # print('\n')
     
-    print('{gamma_intersection} = {gamma_intersection_formula} = {gamma_intersection_polar}'\
+    print('\t{gamma_intersection} = {gamma_intersection_formula} = {gamma_intersection_polar}'\
         .format(gamma_intersection = intersection.get_gamma_symbol(),
                 gamma_intersection_formula = intersection.get_gamma_formula(depend_on = 'admittance'),
                 gamma_intersection_polar = intersection.get_gamma_polar()))
     print('\n')
     
-    d = SP(name = d_name,
+    d = SL(name = d_name,
            lamda = lamda,
            point_1 = intersection,
-           point_2 = des_point)
+           point_2 = shortcircuit_point)
     
     # d_length = get_wire_length(phase(Gamma_eq_value), phase(Gamma_inter_value))
     # d_ = lamda * d_length
     # print('\t{} = {:.2f}*{}'.format(d, d_/lamda, lamda))
     # print('\n')
     d_length = d.get_absolute_length()
-    print('{d} = {d_length}'\
+    print('\t{d} = {d_length}'\
         .format(d = d.get_line_symbol(),
                 d_length = d_length))
+    print('\n')
 
     return stub_in_point
     
-def plot_smith_chart(src_point, des_point, intersection, gate):
+def plot_smith_chart(src_point, des_point, intersection, stub_in_point, stub_out_point, line_impedance, gate):
     """
         @ BriefL:   Draw the Smith graph from known parameters
         @ Param:    
@@ -178,12 +186,13 @@ def plot_smith_chart(src_point, des_point, intersection, gate):
                     gate: The gate of the scattering matrix
     """
     
-    if gate == 'input':
-        Y_inter, Y_stub_in, Y_init, Y_result = symbols('Y{} Y{} Y{} Y{}'.format('a', get_sub('stub'), get_sub('s'), get_sub('s_max')))
-        Z_inter, Z_stub_in, Z_init, Z_result = symbols('Z{}, Z{} Z{} Z{}'.format('a', get_sub('stub'), get_sub('s'), get_sub('s_max')))
-    elif gate == 'output':
-        Y_inter, Y_stub_in, Y_init, Y_result = symbols('Y{} Y{} Y{} Y{}'.format('b', get_sub('stub'), get_sub('L'), get_sub('L_max')))
-        Z_inter, Z_stub_in, Z_init, Z_result = symbols('Z{}, Z{} Z{} Z{}'.format('b', get_sub('stub'), get_sub('L'), get_sub('L_max')))
+    # if gate == 'input':
+    #     Y_inter, Y_stub_in, Y_init, Y_result = symbols('Y{} Y{} Y{} Y{}'.format('a', get_sub('stub'), get_sub('s'), get_sub('s_max')))
+    #     Z_inter, Z_stub_in, Z_init, Z_result = symbols('Z{}, Z{} Z{} Z{}'.format('a', get_sub('stub'), get_sub('s'), get_sub('s_max')))
+    # elif gate == 'output':
+    #     Y_inter, Y_stub_in, Y_init, Y_result = symbols('Y{} Y{} Y{} Y{}'.format('b', get_sub('stub'), get_sub('L'), get_sub('L_max')))
+    #     Z_inter, Z_stub_in, Z_init, Z_result = symbols('Z{}, Z{} Z{} Z{}'.format('b', get_sub('stub'), get_sub('L'), get_sub('L_max')))
+    
     fig, axes = plt.subplots(2, len(intersection), subplot_kw={'projection': 'polar'})
     
     for point in intersection:
@@ -192,7 +201,11 @@ def plot_smith_chart(src_point, des_point, intersection, gate):
             Y_inter_value = np.append(Y_inter_value, normalized_admittance_intersection)
         except NameError:
             Y_inter_value = np.array([normalized_admittance_intersection])
-            
+    
+    boder_point = SP(name = 'border', 
+                     gamma = 1, 
+                     line_impedance = line_impedance)
+                                 
     for index, point in enumerate(intersection):
         try:
             ax1 = axes[0][index]
@@ -200,33 +213,100 @@ def plot_smith_chart(src_point, des_point, intersection, gate):
         except TypeError:
             ax1 = axes[0]
             ax2 = axes[1]
-        stub_in_point = caculate_Gamma_short_circuit_stub(point, src_point, des_point, gate)
-        p1 = ax1.scatter(phase(Gamma_final_value), abs(Gamma_final_value), marker='o', s=100, color = 'r', alpha = 1, label = Z_result)
-        p2 = ax1.scatter(phase(Gamma_final_value) + np.pi, abs(Gamma_final_value), marker='x', linewidths = 3, color = 'r', alpha = 1, label = Y_result)
-        p3 = ax1.scatter(phase(Gamma_init_value), abs(Gamma_init_value), marker='o', s=100, color = 'b', alpha = 1, label = Z_init)
-        p4 = ax1.scatter(phase(Gamma_init_value) + np.pi, abs(Gamma_init_value), marker='x', linewidths = 3, color = 'b', alpha = 1, label = Y_init)
-        p5 = ax1.scatter(phase(Gamma_inter_val), abs(Gamma_inter_val), marker='o', s=100, color = 'orange', alpha = 1, label = Z_inter)
-        p6 = ax1.scatter(phase(Gamma_inter_val) + np.pi, abs(Gamma_inter_val), marker='x', linewidths = 3, color = 'orange', alpha = 1, label = Y_inter)
-        r, phi = get_Smith_constant_gamma_module_locus(abs(Gamma_final_value))
-        ax1.plot(phi, r, color = 'c')
-        r, phi = get_Smith_constant_gamma_module_locus(1)
-        ax1.plot(phi, r, color = 'black')
-        r, phi = get_Smith_constant_realpath_locus(Y_init_value.real)
-        ax1.plot(phi, r, color = 'violet')
+        
+        p1 = ax1.scatter(des_point.get_gamma_phase(round_index = None), 
+                         des_point.get_gamma_module(round_index = None), 
+                         marker='o', 
+                         s=100, 
+                         color = 'r', 
+                         alpha = 1, 
+                         label = des_point.get_impedance_symbol(Nomalize = True))
+        p2 = ax1.scatter(des_point.get_gamma_phase(round_index = None) + np.pi, 
+                         des_point.get_gamma_module(round_index = None), 
+                         marker='x', 
+                         linewidths = 3, 
+                         color = 'r', 
+                         alpha = 1, 
+                         label = des_point.get_admittance_symbol(Nomalize = True))
+        p3 = ax1.scatter(src_point.get_gamma_phase(round_index = None), 
+                         src_point.get_gamma_module(round_index = None), 
+                         marker='o', 
+                         s=100, 
+                         color = 'b', 
+                         alpha = 1, 
+                         label = src_point.get_impedance_symbol(Nomalize = True))
+        p4 = ax1.scatter(src_point.get_gamma_phase(round_index = None) + np.pi, 
+                         src_point.get_gamma_module(round_index = None), 
+                         marker='x', 
+                         linewidths = 3, 
+                         color = 'b', 
+                         alpha = 1, 
+                         label = src_point.get_admittance_symbol(Nomalize = True))
+        p5 = ax1.scatter(point.get_gamma_phase(round_index = None), 
+                         point.get_gamma_module(round_index = None), 
+                         marker='o', 
+                         s=100, 
+                         color = 'orange', 
+                         alpha = 1, 
+                         label = point.get_impedance_symbol(Nomalize = True))
+        p6 = ax1.scatter(point.get_gamma_phase(round_index = None) + np.pi, 
+                         point.get_gamma_module(round_index = None), 
+                         marker='x', 
+                         linewidths = 3, 
+                         color = 'orange', 
+                         alpha = 1, 
+                         label = point.get_admittance_symbol(Nomalize = True))
+        
+        theta, module = des_point.get_isometric_gamma_vector()
+        ax1.plot(theta, module, color = 'c')
+        theta, module = boder_point.get_isometric_gamma_vector()
+        ax1.plot(theta, module, color = 'black')
+        theta, module = src_point.get_isometric_impedance_realvalue_vector()
+        ax1.plot(theta, module, color = 'violet')
+        
         ax1.axes.xaxis.set_ticklabels([])
         ax1.axes.yaxis.set_ticklabels([])
         fontP = FontProperties()
         fontP.set_size('medium')
         title = 'note'
         ax1.legend(handles=[p1, p2, p3, p4, p5, p6], title = title, bbox_to_anchor=(1.05, 1), loc='upper left', prop=fontP)
-        ax1.set_title('With {} = {:.2f}'.format(Y_inter ,Y_inter_val) + '\nOn main circuit')
+        ax1.set_title('With {normalized_admittance_intersection} = {normalized_admittance_intersection_value}' \
+            .format(normalized_admittance_intersection = point.get_admittance_symbol(Nomalize = True),
+                    normalized_admittance_intersection_value = point.get_admittance(Nomalize = True)) 
+            + '\nOn main circuit')
         
-        p7 = ax2.scatter(phase(Gamma_stub_in_val), abs(Gamma_stub_in_val), marker='o', s=100, color = 'b', alpha = 1, label = Z_stub_in)
-        p8 = ax2.scatter(phase(Gamma_stub_in_val) + np.pi, abs(Gamma_stub_in_val), marker='x', linewidths = 3, color = 'b', alpha = 1, label = Y_stub_in)
-        p9 = ax2.scatter(np.pi, 1, marker='o', s=100, color = 'r', alpha = 1, label = 'Z{}'.format(get_sub('short')))
-        p10 = ax2.scatter(0, 1, marker='x', linewidths = 3, color = 'r', alpha = 1, label = 'Y{}'.format(get_sub('short')))
-        r, phi = get_Smith_constant_gamma_module_locus(1)
-        ax2.plot(phi, r, color = 'black')
+        p7 = ax2.scatter(stub_in_point[index].get_gamma_phase(round_index = None), 
+                         stub_in_point[index].get_gamma_module(round_index = None), 
+                         marker='o', 
+                         s=100, 
+                         color = 'b', 
+                         alpha = 1, 
+                         label = stub_in_point[index].get_impedance_symbol(Nomalize = True))
+        p8 = ax2.scatter(stub_in_point[index].get_gamma_phase(round_index = None) + np.pi, 
+                         stub_in_point[index].get_gamma_module(round_index = None), 
+                         marker='x', 
+                         linewidths = 3, 
+                         color = 'b', 
+                         alpha = 1, 
+                         label = stub_in_point[index].get_admittance_symbol(Nomalize = True))
+        p9 = ax2.scatter(stub_out_point.get_gamma_phase(round_index = None), 
+                         stub_out_point.get_gamma_module(round_index = None), 
+                         marker='o', 
+                         s=100, 
+                         color = 'r', 
+                         alpha = 1, 
+                         label = stub_out_point.get_impedance_symbol(Nomalize = True))
+        p10 = ax2.scatter(stub_out_point.get_gamma_phase(round_index = None) + np.pi, 
+                          stub_out_point.get_gamma_module(round_index = None), 
+                          marker='x', 
+                          linewidths = 3, 
+                          color = 'r', 
+                          alpha = 1, 
+                          label = stub_out_point.get_admittance_symbol(Nomalize = True))
+        
+        theta, module = boder_point.get_isometric_gamma_vector()
+        ax2.plot(theta, module, color = 'black')
+ 
         ax2.axes.xaxis.set_ticklabels([])
         ax2.axes.yaxis.set_ticklabels([])
         fontP = FontProperties()
@@ -234,6 +314,7 @@ def plot_smith_chart(src_point, des_point, intersection, gate):
         title = 'note'
         ax2.set_title('On stub circuit')
         ax2.legend(handles=[p7, p8, p9, p10], title = title, bbox_to_anchor=(1.05, 1), loc='upper left', prop=fontP) 
+    
     fig.suptitle('Impedance matching at {}'.format(gate), fontsize=16)
     fig.show()
     
@@ -243,6 +324,7 @@ def get_sub(x):
         @ Parma: x: Normal characters
         @ Retval: Characters in subscript format  
     """
+    
     normal = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+-=()"
     sub_s = "ₐ₈CDₑբGₕᵢⱼₖₗₘₙₒₚQᵣₛₜᵤᵥwₓᵧZₐ♭꜀ᑯₑբ₉ₕᵢⱼₖₗₘₙₒₚ૧ᵣₛₜᵤᵥwₓᵧ₂₀₁₂₃₄₅₆₇₈₉₊₋₌₍₎"
     res = x.maketrans(''.join(normal), ''.join(sub_s))
@@ -282,10 +364,10 @@ def myfunction(start_point, gate_point, line_impedance, gate):
     print('For maximum power gain:')
     Gamma_eq_value = gate_point.get_gamma().conjugate()
     equivalent_point = SP(name = equivalent_point_name, 
-                      gamma = Gamma_eq_value, 
-                      line_impedance = line_impedance)
+                          gamma = Gamma_eq_value, 
+                          line_impedance = line_impedance)
 
-    print('{gamma_equivalent_point} = {gamma_gate_point}* = {gamma_equivalent_point_value}'\
+    print('\t{gamma_equivalent_point} = {gamma_gate_point}* = {gamma_equivalent_point_value}'\
         .format(gamma_equivalent_point = equivalent_point.get_gamma_symbol(),
                 gamma_gate_point = gate_point.get_gamma_symbol(),
                 gamma_equivalent_point_value = equivalent_point.get_gamma_polar()))                                                                                          
@@ -305,7 +387,8 @@ def myfunction(start_point, gate_point, line_impedance, gate):
     print('{normalized_admittance_start_point} = {normalized_admittance_start_point_value}'\
         .format(normalized_admittance_start_point = start_point.get_impedance_symbol(Nomalize = True),
                 normalized_admittance_start_point_value = start_point.get_admittance(Nomalize = True)))
-
+    print('\n')
+    
     print('{normalized_admittance_start_point} = {normalized_admittance_start_point_value}'\
         .format(normalized_admittance_start_point = start_point.get_admittance_symbol(Nomalize = True),
                 normalized_admittance_start_point_value = start_point.get_admittance(Nomalize = True)))
@@ -325,13 +408,12 @@ def myfunction(start_point, gate_point, line_impedance, gate):
     Yit_norm_iv = find_cmg_cri_intersection(gm_isometric_equation, YL_norm_rv)
     
     print('Look up Smith chart, we have:')
-    print('\n')
     
     for imag_value in Yit_norm_iv:
         value = complex(YL_norm_rv, imag_value)
         intersection_i = SP(name = intersection_name,
-                                 line_impedance = line_impedance,
                                  admittance = value,
+                                 line_impedance = line_impedance,
                                  Nomalize = True)
         try:
             intersection = np.append(intersection, intersection_i)
@@ -345,12 +427,31 @@ def myfunction(start_point, gate_point, line_impedance, gate):
                         normalized_admittance_intersection_value = intersection_i.get_admittance(Nomalize = True)))
     print('\n')
     
+    shortcircuit_point = SP(name = '_short_circuit',
+                            impedance = 0,
+                            line_impedance = line_impedance)
+    
     for point in intersection:
-        stub_in_point_i = caculate_Gamma_short_circuit_stub(start_point, equivalent_point, point, gate)
+        stub_in_point_i = caculate_Gamma_short_circuit_stub(start_point, 
+                                                            equivalent_point, 
+                                                            point, 
+                                                            shortcircuit_point,  
+                                                            line_impedance,
+                                                            gate)
+        try:
+            stub_in_point = np.append(stub_in_point, stub_in_point_i)
+        except NameError: 
+            stub_in_point = np.array([stub_in_point_i])
     # plot_smith_chart(Yit_norm_value, YL_norm_value, Gamma_eq_value, Gamma_L_value, gate)
     # plot_smith_chart(start_point, equivalent_point, intersection, gate)
-    stub_in_point = caculate_Gamma_short_circuit_stub(start_point, equivalent_point, intersection, gate)
-    plot_smith_chart(start_point, equivalent_point, intersection, gate)
+    # stub_in_point = caculate_Gamma_short_circuit_stub(start_point, equivalent_point, intersection, gate)
+    plot_smith_chart(start_point, 
+                     equivalent_point, 
+                     intersection, 
+                     stub_in_point, 
+                     shortcircuit_point, 
+                     line_impedance, 
+                     gate)
 
 # def get_wire_length(src_phase, des_phase):
 #     """
