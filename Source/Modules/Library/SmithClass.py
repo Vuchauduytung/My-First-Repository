@@ -1,3 +1,4 @@
+import sympy as sp
 from sympy import *
 import numpy as np
 from cmath import *
@@ -292,6 +293,25 @@ class SmithPoint:
             return self.Gamma_y
         else:
             raise Exception("Unknown parameter: '{}'".format(depend_on))
+        
+    def get_gm_isometric_equation(self):
+        """
+        @ Brief:    Find the locus equation of the isometric line of the reflectance according to the value
+                    of the impedance at that point
+        @ Param:    gamma_module: Thhe magnitude of the reflectance
+        @ Retval:   gamma_module_locus_function: The desired locus equation
+        """
+
+        gamma_module = self.get_gamma_module(round_index = None)
+        
+        a, b = symbols('a b', real=True)
+        c = (a**2 + b**2 - 1)/((a+1)**2 + b**2)
+        d = ((2*b)/((a+1)**2 + b**2))  
+        r = sp.sqrt(c**2 + d**2)
+        
+        gamma_module_locus_function = Eq(r, gamma_module)
+        
+        return gamma_module_locus_function
     
     def get_isometric_gamma_vector(self, num = 360, angle_unit = 'radian'):
         """

@@ -1,89 +1,147 @@
+# System framework
 import numpy as np
-import matplotlib.pyplot as plt
 from sympy import *
-from sympy.core.numbers import I
-import sympy.solvers as solv
+from matplotlib.font_manager import FontProperties
 import matplotlib.pyplot as plt
-from scipy.special import factorial
-    
-def get_gm_isometric_equation(gamma_module):
-    """
-        @ Brief:    Find the locus equation of the isometric line of the reflectance according to the value
-                    of the impedance at that point
-        @ Param:    gamma_module: Thhe magnitude of the reflectance
-        @ Retval:   gamma_module_locus_function: The desired locus equation
-    """
-    if gamma_module > 1:
-        print("Reflection coefficient's module can not larger 1")
-        return None
-    a, b = symbols('a b', real=True)
-    c = (a**2 + b**2 - 1)/((a+1)**2 + b**2)
-    d = ((2*b)/((a+1)**2 + b**2))  
-    r = sqrt(c**2 + d**2)
-    gamma_module_locus_function = Eq(r, gamma_module)
-    return gamma_module_locus_function
+from cmath import *
 
-def find_cmg_cri_intersection(funtion, real_path):
+# User framework
+from SmithClass import SmithPoint as SP
+from CaculateSupport import *
+
+
+def plot_smith_chart(src_point, des_point, intersection, stub_in_point, stub_out_point, line_impedance, gate):
     """
-        @ Brief:    Calculate the imaginary part value of the impedance at the point with real part and the
-                    relation equation between real and imaginary part, and the real part value of the given impedance
+        @ BriefL:   Draw the Smith graph from known parameters
         @ Param:    
-                    function: Relation equation between real and imaginary part
-                    real_path: Value of the given real part
-        @ Retval:   img_path: Value of the imaginary part
+                    Y_init_value: Conductive resistance at the initial point
+                    Y_inter_value: Conductive resistance at the equivalent_point
+                    Gamma_final_value: reflectance at the destination point
+                    Gamma_init_value: reflectance at the initial point
+                    gate: The gate of the scattering matrix
     """
-    a, b = symbols('a b', real=True)
-    try:
-        img_path = solv.solve(funtion.subs(a, real_path), b)
-    except Exception as err:
-        print("An error occurred while finding the intersection between constant gamma's module and constants real impedance locus")
-        print(err)
-        img_path = None
-    return img_path
 
-def get_Smith_constant_gamma_module_locus(gamma_module):
-    """
-        @ Brief:    Create 2 vectors that contain the magnitude and argument values (complex number)
-                    with argument ranging from -pi to pi and magnitude is the repeating vector of the given value
-                    2 Vectors creat a circle with radius r, phase phi (polar form)
-        @ Param:    gamma_module: Thhe magnitude of the reflectance
-        @ Retval:   
-                    r: Radius
-                    phi: Phase angle
+    fig, axes = plt.subplots(2, len(intersection), subplot_kw={'projection': 'polar'})
+    
+    for point in intersection:
+        normalized_admittance_intersection = point.get_admittance(Nomalize = True)
+        try:
+            Y_inter_value = np.append(Y_inter_value, normalized_admittance_intersection)
+        except NameError:
+            Y_inter_value = np.array([normalized_admittance_intersection])
+    
+    boder_point = SP(name = 'border', 
+                     gamma = 1, 
+                     line_impedance = line_impedance)
+                                 
+    for index, point in enumerate(intersection):
+        try:
+            ax1 = axes[0][index]
+            ax2 = axes[1][index]
+        except TypeError:
+            ax1 = axes[0]
+            ax2 = axes[1]
         
-    """
-    r = np.repeat(gamma_module, 360)
-    phi = np.linspace(- np.pi, np.pi, num = 360)
-    return r, phi
-
-def get_Smith_constant_realpath_locus(real_value):
-    """
-        @ Brief:    Create 2 vectors contain the magnitude and argument values of the reflectance given 
-                    the condition that Z=a+bj is the impedance at the considering point and a is a given value
-                    and b is within a specified range
-        @ Param:    real_value: Real part value of Z
-        @ Retval:   
-                    r: Radius
-                    phi: Phase angle
-        @ Description:  This function has a built-in ability to predict the trend of the phase angle for drawing Smith chhart
-    """
-    a = np.repeat(real_value, 360)
-    b = np.linspace(-10, 10, num = 360)
-    c = (a**2 + b**2 - 1)/((a+1)**2 + b**2)
-    d = ((2*b)/((a+1)**2 + b**2)) 
-    r = np.sqrt(c**2 + d**2)
-    phi = np.arctan(d/c)
-    for index in range(len(phi)-1):
-        while phi[index] > np.pi:
-            phi[index : ] -= 2*np.pi
-        while phi[index] < -np.pi:
-            phi[index : ] += 2*np.pi
-        while abs(phi[index]-phi[index+1]) >= np.pi/2:
-            if phi[index+1] > phi[index]:
-                phi[index+1 : ] -= np.pi
-            else:
-                phi[index+1 : ] += np.pi
-        if phi[index+1] < -np.pi/2:
-            if index > 180:
-                phi[index+1 : ] += np.pi
-    return r, phi
+        p1 = ax1.scatter(des_point.get_gamma_phase(round_index = None), 
+                         des_point.get_gamma_module(round_index = None), 
+                         marker='o', 
+                         s=100, 
+                         color = 'r', 
+                         alpha = 1, 
+                         label = des_point.get_impedance_symbol(Nomalize = True))
+        p2 = ax1.scatter(des_point.get_gamma_phase(round_index = None) + np.pi, 
+                         des_point.get_gamma_module(round_index = None), 
+                         marker='x', 
+                         linewidths = 3, 
+                         color = 'r', 
+                         alpha = 1, 
+                         label = des_point.get_admittance_symbol(Nomalize = True))
+        p3 = ax1.scatter(src_point.get_gamma_phase(round_index = None), 
+                         src_point.get_gamma_module(round_index = None), 
+                         marker='o', 
+                         s=100, 
+                         color = 'b', 
+                         alpha = 1, 
+                         label = src_point.get_impedance_symbol(Nomalize = True))
+        p4 = ax1.scatter(src_point.get_gamma_phase(round_index = None) + np.pi, 
+                         src_point.get_gamma_module(round_index = None), 
+                         marker='x', 
+                         linewidths = 3, 
+                         color = 'b', 
+                         alpha = 1, 
+                         label = src_point.get_admittance_symbol(Nomalize = True))
+        p5 = ax1.scatter(point.get_gamma_phase(round_index = None), 
+                         point.get_gamma_module(round_index = None), 
+                         marker='o', 
+                         s=100, 
+                         color = 'orange', 
+                         alpha = 1, 
+                         label = point.get_impedance_symbol(Nomalize = True))
+        p6 = ax1.scatter(point.get_gamma_phase(round_index = None) + np.pi, 
+                         point.get_gamma_module(round_index = None), 
+                         marker='x', 
+                         linewidths = 3, 
+                         color = 'orange', 
+                         alpha = 1, 
+                         label = point.get_admittance_symbol(Nomalize = True))
+        
+        theta, module = des_point.get_isometric_gamma_vector()
+        ax1.plot(theta, module, color = 'c')
+        theta, module = boder_point.get_isometric_gamma_vector()
+        ax1.plot(theta, module, color = 'black')
+        theta, module = src_point.get_isometric_impedance_realvalue_vector()
+        ax1.plot(theta, module, color = 'violet')
+        
+        ax1.axes.xaxis.set_ticklabels([])
+        ax1.axes.yaxis.set_ticklabels([])
+        fontP = FontProperties()
+        fontP.set_size('medium')
+        title = 'note'
+        ax1.legend(handles=[p1, p2, p3, p4, p5, p6], title = title, bbox_to_anchor=(1.05, 1), loc='upper left', prop=fontP)
+        ax1.set_title('With {normalized_admittance_intersection} = {normalized_admittance_intersection_value}' \
+            .format(normalized_admittance_intersection = point.get_admittance_symbol(Nomalize = True),
+                    normalized_admittance_intersection_value = point.get_admittance(Nomalize = True)) 
+            + '\nOn main circuit')
+        
+        p7 = ax2.scatter(stub_in_point[index].get_gamma_phase(round_index = None), 
+                         stub_in_point[index].get_gamma_module(round_index = None), 
+                         marker='o', 
+                         s=100, 
+                         color = 'b', 
+                         alpha = 1, 
+                         label = stub_in_point[index].get_impedance_symbol(Nomalize = True))
+        p8 = ax2.scatter(stub_in_point[index].get_gamma_phase(round_index = None) + np.pi, 
+                         stub_in_point[index].get_gamma_module(round_index = None), 
+                         marker='x', 
+                         linewidths = 3, 
+                         color = 'b', 
+                         alpha = 1, 
+                         label = stub_in_point[index].get_admittance_symbol(Nomalize = True))
+        p9 = ax2.scatter(stub_out_point.get_gamma_phase(round_index = None), 
+                         stub_out_point.get_gamma_module(round_index = None), 
+                         marker='o', 
+                         s=100, 
+                         color = 'r', 
+                         alpha = 1, 
+                         label = stub_out_point.get_impedance_symbol(Nomalize = True))
+        p10 = ax2.scatter(stub_out_point.get_gamma_phase(round_index = None) + np.pi, 
+                          stub_out_point.get_gamma_module(round_index = None), 
+                          marker='x', 
+                          linewidths = 3, 
+                          color = 'r', 
+                          alpha = 1, 
+                          label = stub_out_point.get_admittance_symbol(Nomalize = True))
+        
+        theta, module = boder_point.get_isometric_gamma_vector()
+        ax2.plot(theta, module, color = 'black')
+ 
+        ax2.axes.xaxis.set_ticklabels([])
+        ax2.axes.yaxis.set_ticklabels([])
+        fontP = FontProperties()
+        fontP.set_size('medium')
+        title = 'note'
+        ax2.set_title('On stub circuit')
+        ax2.legend(handles=[p7, p8, p9, p10], title = title, bbox_to_anchor=(1.05, 1), loc='upper left', prop=fontP) 
+    
+    fig.suptitle('Impedance matching at {}'.format(gate), fontsize=16)
+    fig.show()  
