@@ -13,6 +13,15 @@ import SmithChart as SC
 solution = ''
 
 def caculate_line_length_at_mainbranch_and_stub_to_get_maxpower(start_point, gate_point, equivalent_point_name, line_impedance, end_stub_point, gate):
+    # Hàm này tính toán chiều dài dây chêm và dây ở mạch chính để có công suất cực đại 
+    # Hàm này chỉ áp dụng cho 1 gate
+    # start_point: điểm bắt đầu
+    # gate_point: điểm đầu vào của ma trận tán xạ
+    # equivalent_point_name: điểm tương đương trong phối hợp trở kháng
+    # line_impedance : Trở kháng đường dây
+    # end_stub_point: điểm cuối cùng của stub
+    # gate: "'input' hoặc 'output'"
+    # ret: chiều dài đường dây bù thêm trên nhánh chính và stub
     
     global solution
     
@@ -54,7 +63,7 @@ def caculate_line_length_at_mainbranch_and_stub_to_get_maxpower(start_point, gat
     return result   
 
 def find_equivalent_point_for_max_power(gate_point, equivalent_point_name, line_impedance):
-    
+    # 
     global solution
     
     solution += 'For maximum power gain:'
@@ -89,17 +98,6 @@ def find_intersection(start_point, equivalent_point, line_impedance, gate):
         @param      Zw_value          wire impedance
         @param      ZL_value          load impedance
         @param      Gamma_eq_value    equivalent reflectance looking at starting point of the line
-        Explain:
-            Gamma_L     reflectance looking at the end of the line
-            Gamma_eq    reflectance looking at starting point of the line
-            Gamma_g     reflectance at gate of scattering matrix module
-            Zeq         equivalent impedance looking at starting point of the line
-            Zeq_norm    equivalent impedance looking at starting point of the line normalized to Z0
-            ZL          load impedance
-            ZL_norm     load impedance normalized to Z0
-            YL_norm     load admittance normalized to Z0
-            Yit_norm    constant real value and reflectance' module equivalent_point 
-            admittance normalized to Z0
     """
     
     if gate == 'input':
