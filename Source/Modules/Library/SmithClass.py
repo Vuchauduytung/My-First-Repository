@@ -95,6 +95,7 @@ class SmithPoint:
                         round_index: Index of the number rounded up to after the "." decimal 
             @ Retval:   The value of the impedance
         """
+        
         if Nomalize:
             result = self.Z_val/self.Z0_val
         else:
@@ -113,6 +114,7 @@ class SmithPoint:
                         round_index: Index of the number rounded up to after the "." decimal 
             @ Retval:   The value of the conductive resistance
         """
+        
         if Nomalize:
             result = self.Y_val*self.Z0_val
         else:
@@ -129,6 +131,7 @@ class SmithPoint:
                         round_index: Index of the number rounded up to after the "." decimal 
             @ Retval:   The value of the reflectance
         """
+        
         if round_index is None:
             result = self.Gamma_val
         else:
@@ -146,6 +149,7 @@ class SmithPoint:
                         round_index: Index of the number rounded up to after the "." decimal 
             @ Retval:   The magnitude of the reflectance
         """
+        
         result = abs(self.Gamma_val)
         if round_index is None:
             return result
@@ -160,10 +164,13 @@ class SmithPoint:
             @ Retval:   The phase value of the reflectance
         """
         
+        gamma_phase = phase(self.Gamma_val)
+        while  gamma_phase < 0:
+            gamma_phase += 2*np.pi
         if unit == 'radian':
-            result = phase(self.Gamma_val)
+            result = gamma_phase
         elif unit == 'dergee':
-            result = phase(self.Gamma_val) * 180/np.pi
+            result = gamma_phase * 180/np.pi
         else:
             raise Exception("Unknown parameter: '{}'".format(unit))
         if round_index is None:
@@ -183,10 +190,7 @@ class SmithPoint:
             result = '0'
         else:
             module = abs(self.Gamma_val)
-            if unit == 'dergee':
-                theta = phase(self.Gamma_val)*180/np.pi
-            elif unit == 'radian':
-                theta = phase(self.Gamma_val)
+            theta = self.get_gamma_phase(round_index = None, unit = unit)
             if round_index is not None:
                 module = round(module, round_index)
                 theta = round(theta, round_index)
@@ -202,6 +206,7 @@ class SmithPoint:
                         (True: Yes, False: No)
             @ Retval:   The symbol of the impedance
         """
+        
         if Nomalize:
             return self.z
         else:
@@ -215,6 +220,7 @@ class SmithPoint:
                         (True: Yes, False: No)
             @ Retval:   The symbol of the conductive resistance
         """
+        
         if Nomalize:
             return self.y
         else:
@@ -225,6 +231,7 @@ class SmithPoint:
             @ Brief:    Get the reflectance's symbol at the current considered point
             @ Retval:   The symbol of the reflectance
         """
+        
         return self.Gamma
     
     def get_module_gamma_symbol(self):
@@ -232,6 +239,7 @@ class SmithPoint:
             @ Brief:    Get the magnitude of the reflectance's symbol at the current considered point
             @ Retval:   The magnitude of the reflectance's symbol
         """
+        
         return Symbol('|' + str(self.Gamma) + '|')
     
     def get_impedance_formula(self, depend_on = 'gamma'):
@@ -243,6 +251,7 @@ class SmithPoint:
                             'admittance': over the admittance
             @ Retval:   The formula of the impedance
         """
+        
         if depend_on == 'gamma':
             return self.Z_g
         elif depend_on == 'admittance':
@@ -259,6 +268,7 @@ class SmithPoint:
                             'impedance': over the impedance
             @ Retval:   The formula of the admittance
         """
+        
         if depend_on == 'gamma':
             return self.Y_g
         elif depend_on == 'impedance':
@@ -275,6 +285,7 @@ class SmithPoint:
                             'impedance': over the impedance
             @ Retval:   The formula of the reflectance
         """
+        
         if depend_on == 'impedance':
             return self.Gamma_z
         elif depend_on == 'admittance':
@@ -376,6 +387,7 @@ class SmithLine:
                         direct == 0: lengthen
             @ Retval:   The absolute value of the wire over the wave length
         """
+        
         phase_point_1 = self.point_1.get_gamma_phase(round_index = None)
         phase_point_2 = self.point_2.get_gamma_phase(round_index = None)
         if direct == 0:
@@ -422,6 +434,7 @@ class SmithLine:
                         direct == 0: lengthen
             @ Retval:   The absolute value of the wire over the wave length
         """
+        
         scaled_length = self.get_scaled_length(direct = direct)
         if round_index is None:
             absolute_length = scaled_length * self.lamda
@@ -434,4 +447,5 @@ class SmithLine:
             @ Brief: Get the symbol of the wire
             @ Retval: The symbol of the wire
         """
+        
         return self.line
